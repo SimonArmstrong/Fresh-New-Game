@@ -2,15 +2,17 @@
 using System.Collections;
 
 public class SinWave : MonoBehaviour {
-    public float max;
-    public float min;
 
-    public float speed;
-    public float currentPosition;    
+    public Vector3[] verts;
 
+    void Start() {
+        verts = GetComponent<MeshFilter>().mesh.vertices;
+    }
 	// Update is called once per frame
 	void Update () {
-        currentPosition += Time.deltaTime;
-	    transform.localPosition += new Vector3(Mathf.Sin(currentPosition) * speed, 0, 0);
-	}
+        // Alter verts here
+
+        // Add verts back into Mesh
+        GetComponent<MeshFilter>().mesh.vertices = verts;
+    }
 }
