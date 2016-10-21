@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
     public float wallPlaceDistance;
 
     public int score;
+    public int currentHeld;
 
     private float dashCooldownTimer;
     private float dashDistance;
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour {
 
     public bool blocking;
     public bool dashing;
+    public bool holdingOrb;
 
     private float moveSpeed;
     private Collider radialDetection;
@@ -43,6 +45,24 @@ public class Player : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider col) {
+        //when the player picks up the orb
+        if (col.tag == "pointOrb")
+        {
+            Destroy(col.gameObject);
+            currentHeld++;
+        }
+        //where the player recieves the effect of the powerup
+        if (col.tag == "powerup")
+        {
+            Destroy(col.gameObject);
+            //powerupy stuff;
+        }
+        //increments a players score when you drop off orbs
+        if (col.tag == "dropZone")
+        {
+            score += currentHeld;
+            currentHeld -= currentHeld;
+        }
         if (col.tag != "Player" && dashing) {
             collisionParticle.Play();
         }
@@ -57,7 +77,7 @@ public class Player : MonoBehaviour {
         GetComponent<TrailRenderer>().enabled = false;
         blocking = false;
         placementSkin = wallPlaceDistance;
-
+        holdingOrb = false;
         joystickName = "joystick " + (id + 1);
     }
 
@@ -69,6 +89,7 @@ public class Player : MonoBehaviour {
             moveSpeed = moveSpeed * dashSpeed;
             dashCooldownTimer = dashCooldown;
             dashDistance = .2f;
+            dashing = true;
         }
 
         if (dashDistance > 0) {
@@ -143,5 +164,19 @@ public class Player : MonoBehaviour {
         if (nearWall) {
             nearWall = false;
         }
-	}
+
+        GameObject hasOrbSprite = gameObject.transform.GetChild(3).gameObject;
+        //returns true if your score is greater than 0
+        holdingOrb = currentHeld > 0;
+
+        //displays whether or not a player is holding an orb
+        if (holdingOrb == true)
+        {
+            hasOrbSprite.SetActive(true);
+        }
+        else
+        {
+            hasOrbSprite.SetActive(false);
+        }
+    }
 }
