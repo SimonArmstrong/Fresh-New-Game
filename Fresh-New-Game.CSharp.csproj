@@ -88,6 +88,8 @@
     <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\Scripts\TexturePlace.cs" />
     <Compile Include="Assets\Scripts\TowerBuilder.cs" />
+    <Compile Include="Assets\Scripts\UI\Character Select\Control.cs" />
+    <Compile Include="Assets\Scripts\UI\Character Select\PlayerPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
