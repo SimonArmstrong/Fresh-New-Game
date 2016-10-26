@@ -38,9 +38,15 @@ public class Player : MonoBehaviour {
     public bool dashMode = false;
 
     private void OnTriggerStay(Collider col) {
-        if (col.tag != "Player") {
+        if (col.tag != "Player" || col.tag != "dropZone") {
             nearWall = true;
             moveSpeed = speed;
+        }
+        //increments a players score when you drop off orbs
+        if (col.tag == "dropZone")
+        {
+            score += currentHeld;
+            currentHeld -= currentHeld;
         }
     }
 
@@ -56,12 +62,6 @@ public class Player : MonoBehaviour {
         {
             Destroy(col.gameObject);
             //powerupy stuff;
-        }
-        //increments a players score when you drop off orbs
-        if (col.tag == "dropZone")
-        {
-            score += currentHeld;
-            currentHeld -= currentHeld;
         }
         if (col.tag != "Player" && dashing) {
             collisionParticle.Play();
@@ -165,7 +165,7 @@ public class Player : MonoBehaviour {
             nearWall = false;
         }
 
-        GameObject hasOrbSprite = gameObject.transform.GetChild(3).gameObject;
+        GameObject hasOrbSprite = gameObject.transform.GetChild(5).gameObject;
         //returns true if your score is greater than 0
         holdingOrb = currentHeld > 0;
 
