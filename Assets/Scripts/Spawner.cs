@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour {
         Vector3 center = transform.position;
         for (int i = 0; i < maxSpawnAmount; i++)
         {
-            Vector3 pos = RandomCircle(center, i, 40.0f);
+            Vector3 pos = RandomCircle(center, i, gameObject.transform.localScale.x/2);
             Instantiate(objectsToSpawn[objectsToSpawn.Count - 1], pos, Quaternion.identity);
         }
     }
