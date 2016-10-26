@@ -27,10 +27,6 @@ public class Control : MonoBehaviour {
         }
 
         for (int i = playerCount; i < 4; i++) {
-            if (Input.GetKeyDown("joystick" + i + "button0")) {
-                Debug.Log("joystick" + i + "button0");
-                playerCount++;
-            }
         }
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button7)) {

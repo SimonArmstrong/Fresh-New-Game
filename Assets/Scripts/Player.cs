@@ -4,6 +4,17 @@ using System.Collections.Generic;
 
 
 public class Player : MonoBehaviour {
+    [System.Serializable]
+    public struct Controller {
+        public string dash;
+        public string block;
+        public string pause;
+        public string moveX;
+        public string moveY;
+        public string rotX;
+        public string rotY;
+    }
+
     public float speed;
     public float dashSpeed;
     public float dashCooldown;
@@ -13,6 +24,7 @@ public class Player : MonoBehaviour {
     public List<GameObject> dashWallObject = new List<GameObject>();
     public float shieldGrowSpeed;
     public float wallPlaceDistance;
+    public Controller controls;
 
     public int score;
     public int currentHeld;
