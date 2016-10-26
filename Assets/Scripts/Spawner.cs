@@ -30,6 +30,6 @@ public class Spawner : MonoBehaviour {
     
 
     void FixedUpdate()
-    { 
+    {
     }
 }
