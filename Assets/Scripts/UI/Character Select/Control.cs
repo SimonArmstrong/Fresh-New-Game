@@ -8,17 +8,19 @@ public class Control : MonoBehaviour {
     public Color filteredColor;
     public List<PlayerPanel> playerSelectImages = new List<PlayerPanel>(); 
 
-	// Use this for initialization
-	void Start () {
+	void Update () {
         for (int i = 0; i < 4; i++) {
             if (!playerSelectImages[i].on) {
                 playerSelectImages[i].image.color = filteredColor;
             }
+            else {
+                StartCoroutine(Flash(playerSelectImages[i]));
+                playerSelectImages[i].image.color = Color.white;
+            }
         }
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
+
+    IEnumerator Flash(PlayerPanel selectImage) {
+        yield return null;
+    }
 }
