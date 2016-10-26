@@ -6,6 +6,8 @@ public class PlayerPanel : MonoBehaviour {
     public bool on;
     public Image image;
 
+    public string ownerController;
+
 	// Use this for initialization
 	void Start () {
         image = GetComponent<Image>();
@@ -13,6 +15,6 @@ public class PlayerPanel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    
 	}
 }
