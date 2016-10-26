@@ -121,12 +121,14 @@ public class Player : MonoBehaviour {
         else { AnimationManager.OnDashing(); }
     }
     public void Movement() {
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal" + id), 0, Input.GetAxis("Vertical" + id)).normalized * moveSpeed * Time.deltaTime;
-        transform.position += movement;
+        Vector3 axisMovement = new Vector3(Input.GetAxis("Horizontal" + id), 0, Input.GetAxis("Vertical" + id)).normalized * moveSpeed * Time.deltaTime;
+        axisMovement = Camera.main.transform.TransformDirection(axisMovement);
+
+        transform.position += new Vector3(axisMovement.x, 0, axisMovement.z);
 
         // NOTE: Consider Revising the use of LookAt();
-        Vector3 direction = transform.position + movement;
-        transform.LookAt(direction);
+        //Vector3 direction = transform.position + movement;
+        //transform.LookAt(direction);
     }
     public void Block() {
 
