@@ -155,6 +155,7 @@ public class Player : MonoBehaviour {
         else { AnimationManager.OnDashing(); }
     }
     public void Movement() {
+        Debug.Log("Player 2: " + Input.GetAxis("Horizontal" + 1));
         Vector3 axisMovement = new Vector3(Input.GetAxis("Horizontal" + id), 0, Input.GetAxis("Vertical" + id)).normalized * moveSpeed * Time.deltaTime;
         axisMovement = cam.transform.TransformDirection(axisMovement);
 
