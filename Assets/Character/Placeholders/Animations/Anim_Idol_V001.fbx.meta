@@ -1,0 +1,171 @@
+fileFormatVersion: 2
+guid: 11f6776a96f54df4298d624aea380d24
+timeCreated: 1477612530
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Bind_Bind
+    100004: Bind_Bind_Belly_Jnt
+    100006: Bind_Bind_Chest_Jnt
+    100008: Bind_Bind_Clav_L_Jnt
+    100010: Bind_Bind_Clav_R_Jnt
+    100012: Bind_Bind_Cog_Jnt
+    100014: Bind_Bind_Foot_L_End
+    100016: Bind_Bind_Foot_L_Jnt
+    100018: Bind_Bind_Foot_R_End
+    100020: Bind_Bind_Foot_R_Jnt
+    100022: Bind_Bind_ForeArm01_L_Jnt
+    100024: Bind_Bind_ForeArm01_R_Jnt
+    100026: Bind_Bind_ForeArm02_L_Jnt
+    100028: Bind_Bind_ForeArm02_R_Jnt
+    100030: Bind_Bind_Hand_L_Jnt
+    100032: Bind_Bind_Hand_R_Jnt
+    100034: Bind_Bind_Head_End
+    100036: Bind_Bind_Head_Jnt
+    100038: Bind_Bind_Knee_L_Jnt
+    100040: Bind_Bind_Knee_R_Jnt
+    100042: Bind_Bind_Mit01_L_Jnt
+    100044: Bind_Bind_Mit01_R_Jnt
+    100046: Bind_Bind_Mit02_L_End
+    100048: Bind_Bind_Mit02_L_Jnt
+    100050: Bind_Bind_Mit02_R_End
+    100052: Bind_Bind_Mit02_R_Jnt
+    100054: Bind_Bind_Neckbase_Jnt
+    100056: Bind_Bind_NeckMid_Jnt
+    100058: Bind_Bind_Pelvis_End
+    100060: Bind_Bind_Pelvis_Jnt
+    100062: Bind_Bind_Pointer01_L_Jnt
+    100064: Bind_Bind_Pointer01_R_Jnt
+    100066: Bind_Bind_Pointer02_L_End
+    100068: Bind_Bind_Pointer02_L_Jnt
+    100070: Bind_Bind_Pointer02_R_End
+    100072: Bind_Bind_Pointer02_R_Jnt
+    100074: Bind_Bind_Shoulder_L_Jnt
+    100076: Bind_Bind_Shoulder_R_Jnt
+    100078: Bind_Bind_Thigh_L_Jnt
+    100080: Bind_Bind_Thigh_R_Jnt
+    100082: Bind_Bind_Thumb01_L_Jnt
+    100084: Bind_Bind_Thumb01_R_Jnt
+    100086: Bind_Bind_Thumb02_L_End
+    100088: Bind_Bind_Thumb02_L_Jnt
+    100090: Bind_Bind_Thumb02_R_End
+    100092: Bind_Bind_Thumb02_R_Jnt
+    100094: Geo_BaseMesh
+    400000: //RootNode
+    400002: Bind_Bind
+    400004: Bind_Bind_Belly_Jnt
+    400006: Bind_Bind_Chest_Jnt
+    400008: Bind_Bind_Clav_L_Jnt
+    400010: Bind_Bind_Clav_R_Jnt
+    400012: Bind_Bind_Cog_Jnt
+    400014: Bind_Bind_Foot_L_End
+    400016: Bind_Bind_Foot_L_Jnt
+    400018: Bind_Bind_Foot_R_End
+    400020: Bind_Bind_Foot_R_Jnt
+    400022: Bind_Bind_ForeArm01_L_Jnt
+    400024: Bind_Bind_ForeArm01_R_Jnt
+    400026: Bind_Bind_ForeArm02_L_Jnt
+    400028: Bind_Bind_ForeArm02_R_Jnt
+    400030: Bind_Bind_Hand_L_Jnt
+    400032: Bind_Bind_Hand_R_Jnt
+    400034: Bind_Bind_Head_End
+    400036: Bind_Bind_Head_Jnt
+    400038: Bind_Bind_Knee_L_Jnt
+    400040: Bind_Bind_Knee_R_Jnt
+    400042: Bind_Bind_Mit01_L_Jnt
+    400044: Bind_Bind_Mit01_R_Jnt
+    400046: Bind_Bind_Mit02_L_End
+    400048: Bind_Bind_Mit02_L_Jnt
+    400050: Bind_Bind_Mit02_R_End
+    400052: Bind_Bind_Mit02_R_Jnt
+    400054: Bind_Bind_Neckbase_Jnt
+    400056: Bind_Bind_NeckMid_Jnt
+    400058: Bind_Bind_Pelvis_End
+    400060: Bind_Bind_Pelvis_Jnt
+    400062: Bind_Bind_Pointer01_L_Jnt
+    400064: Bind_Bind_Pointer01_R_Jnt
+    400066: Bind_Bind_Pointer02_L_End
+    400068: Bind_Bind_Pointer02_L_Jnt
+    400070: Bind_Bind_Pointer02_R_End
+    400072: Bind_Bind_Pointer02_R_Jnt
+    400074: Bind_Bind_Shoulder_L_Jnt
+    400076: Bind_Bind_Shoulder_R_Jnt
+    400078: Bind_Bind_Thigh_L_Jnt
+    400080: Bind_Bind_Thigh_R_Jnt
+    400082: Bind_Bind_Thumb01_L_Jnt
+    400084: Bind_Bind_Thumb01_R_Jnt
+    400086: Bind_Bind_Thumb02_L_End
+    400088: Bind_Bind_Thumb02_L_Jnt
+    400090: Bind_Bind_Thumb02_R_End
+    400092: Bind_Bind_Thumb02_R_Jnt
+    400094: Geo_BaseMesh
+    4300000: Geo_BaseMesh
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Geo_BaseMesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
