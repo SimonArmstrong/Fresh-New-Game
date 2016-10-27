@@ -19,6 +19,7 @@ public class Player : MonoBehaviour {
     public float dashSpeed;
     public float dashCooldown;
 
+    public Camera cam;
     public GameObject shield;
     public Transform wallSpawnPosition;
     public List<GameObject> dashWallObject = new List<GameObject>();
@@ -50,7 +51,7 @@ public class Player : MonoBehaviour {
     public bool dashMode = false;
 
     private void OnTriggerStay(Collider col) {
-        if (col.tag != "Player" || col.tag != "dropZone") {
+        if (col.tag != "Player" && col.tag != "dropZone" && col.tag != "pointOrb") {
             nearWall = true;
             moveSpeed = speed;
         }
@@ -75,7 +76,7 @@ public class Player : MonoBehaviour {
             Destroy(col.gameObject);
             //powerupy stuff;
         }
-        if (col.tag != "Player" && dashing) {
+        if (col.tag != "Player" && dashing && col.tag != "pointOrb") {
             collisionParticle.Play();
         }
     }
@@ -134,7 +135,7 @@ public class Player : MonoBehaviour {
     }
     public void Movement() {
         Vector3 axisMovement = new Vector3(Input.GetAxis("Horizontal" + id), 0, Input.GetAxis("Vertical" + id)).normalized * moveSpeed * Time.deltaTime;
-        axisMovement = Camera.main.transform.TransformDirection(axisMovement);
+        axisMovement = cam.transform.TransformDirection(axisMovement);
 
         transform.position += new Vector3(axisMovement.x, 0, axisMovement.z);
 
