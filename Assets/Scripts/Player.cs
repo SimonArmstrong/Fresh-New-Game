@@ -95,7 +95,7 @@ public class Player : MonoBehaviour {
 
     public void Dash() {
         dashCooldownTimer -= Time.deltaTime;
-        if (Input.GetAxis("Jump" + id) < 0 && dashCooldownTimer <= 0 && !nearWall) {
+        if (Input.GetAxis("Jump" + id) < 0 && dashCooldownTimer <= 0 && !nearWall || Input.GetButtonDown("Dash" + id) && dashCooldownTimer <= 0 && !nearWall) {
             AnimationManager.OnBeginDash();
             GetComponent<TrailRenderer>().enabled = true; 
             moveSpeed = moveSpeed * dashSpeed;
