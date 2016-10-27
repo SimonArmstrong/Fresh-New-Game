@@ -26,7 +26,7 @@ public class Control : MonoBehaviour {
     //flags
     private bool   swapToCharacterSelect = false;
     private bool   swapToMainMenu = false;
-    private bool   isPlaystation = true;
+    private bool   isPlaystation = false;
     private bool   nextPress = true;
     private bool   canReady = false;
     public string contextOrientation = "Vertical";
@@ -45,16 +45,31 @@ public class Control : MonoBehaviour {
                 playerSelectImages[i].image.color = Color.white;
             }
         }
-        for (int i = controllerCount; i < 4; i++)
-        {
+
             if (!isPlaystation) //-DIRECT X-
             {
-                if (Input.GetKeyDown((KeyCode)(350 + (i * 20) + 7)))
-                {
+                if (Input.GetKeyDown(KeyCode.Joystick1Button0)) {
                     swapToCharacterSelect = true;
                     swapToMainMenu = false;
-                    controllerCount++;
-                    playerSelectImages[i].on = true;
+                }
+                for (int i = controllerCount; i < 4; i++)
+                {
+                    if (Input.GetKeyDown((KeyCode)(350 + (i * 20) + 0)))
+                    {
+                        controllerCount++;
+                        playerSelectImages[i].on = true;
+                    }
+                }
+                if (canReady && Input.GetKeyDown((KeyCode)357))
+                {
+                    SceneManager.LoadScene(1);
+
+                    for (int j = 0; j < controllerCount; j++)
+                    {
+                        GameManager.players.Add(defaultPlayer);
+                        //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
+                        //GameManager.players[i].GetComponent<Player>().controls.dash
+                    }
                 }
             }
             else                //-DUALSHOCK-
@@ -63,22 +78,22 @@ public class Control : MonoBehaviour {
                     swapToCharacterSelect = true;
                     swapToMainMenu = false;
                 }
-                if (Input.GetKeyDown((KeyCode)(350 + (i * 20) + 1))) {
-                    controllerCount++;
-                    playerSelectImages[i].on = true;
+                for (int i = controllerCount; i < 4; i++) {
+                    if (Input.GetKeyDown((KeyCode)(350 + (i * 20) + 1))) {
+                        controllerCount++;
+                        playerSelectImages[i].on = true;
+                    }
                 }
                 if (canReady && Input.GetKeyDown((KeyCode)359)) {
                     SceneManager.LoadScene(1);
 
                     for(int j = 0; j < controllerCount; j++) {
-                        GameManager.players.Add(Instantiate(defaultPlayer) as GameObject);
-                        GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
+                        GameManager.players.Add(defaultPlayer);
+                        //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
                         //GameManager.players[i].GetComponent<Player>().controls.dash
                     }
                 }
             }
-
-        }
         if (controllerCount > 1) {
             canReady = true;
         }

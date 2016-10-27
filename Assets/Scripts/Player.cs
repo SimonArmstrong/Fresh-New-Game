@@ -92,6 +92,27 @@ public class Player : MonoBehaviour {
         placementSkin = wallPlaceDistance;
         holdingOrb = false;
         joystickName = "joystick " + (id + 1);
+
+        cam.GetComponent<MouseAimCamera>().target = gameObject;
+        Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 5), Quaternion.FromToRotation(cam.transform.position, transform.position));
+        if (GameManager.players.Count == 2)
+        {
+            GameManager.players[0].GetComponent<Player>().cam.rect = new Rect(0, 0.5f, 1, 1);
+            GameManager.players[1].GetComponent<Player>().cam.rect = new Rect(0, -0.5f, 1, 1);
+        }
+        else if (GameManager.players.Count == 3)
+        {
+            GameManager.players[0].GetComponent<Player>().cam.rect = new Rect(0, 0.5f, 1, 1);
+            GameManager.players[1].GetComponent<Player>().cam.rect = new Rect(0, -0.5f, 1, 1);
+            GameManager.players[2].GetComponent<Player>().cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
+        }
+        else if (GameManager.players.Count == 4)
+        {
+            GameManager.players[0].GetComponent<Player>().cam.rect = new Rect(-.5f, 0.5f, 1, 1);
+            GameManager.players[1].GetComponent<Player>().cam.rect = new Rect(.5f, .5f, 1, 1);
+            GameManager.players[2].GetComponent<Player>().cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
+            GameManager.players[3].GetComponent<Player>().cam.rect = new Rect(0.5f, -0.5f, 1, 1);
+        }
     }
 
     public void Dash() {
