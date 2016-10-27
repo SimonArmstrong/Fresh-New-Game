@@ -1,0 +1,169 @@
+fileFormatVersion: 2
+guid: df783acc5e2e9424e8c69cb3c355029b
+timeCreated: 1477531871
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: BaseCharacter_BaseMesh
+    100002: BaseCharacter_Bind_Belly_Jnt
+    100004: BaseCharacter_Bind_Chest_Jnt
+    100006: BaseCharacter_Bind_Clav_L_Jnt
+    100008: BaseCharacter_Bind_Clav_R_Jnt
+    100010: BaseCharacter_Bind_Cog_Jnt
+    100012: BaseCharacter_Bind_Foot_L_End
+    100014: BaseCharacter_Bind_Foot_L_Jnt
+    100016: BaseCharacter_Bind_Foot_R_End
+    100018: BaseCharacter_Bind_Foot_R_Jnt
+    100020: BaseCharacter_Bind_ForeArm01_L_Jnt
+    100022: BaseCharacter_Bind_ForeArm01_R_Jnt
+    100024: BaseCharacter_Bind_ForeArm02_L_Jnt
+    100026: BaseCharacter_Bind_ForeArm02_R_Jnt
+    100028: BaseCharacter_Bind_Hand_L_Jnt
+    100030: BaseCharacter_Bind_Hand_R_Jnt
+    100032: BaseCharacter_Bind_Head_End
+    100034: BaseCharacter_Bind_Head_Jnt
+    100036: BaseCharacter_Bind_Knee_L_Jnt
+    100038: BaseCharacter_Bind_Knee_R_Jnt
+    100040: BaseCharacter_Bind_Mit01_L_Jnt
+    100042: BaseCharacter_Bind_Mit01_R_Jnt
+    100044: BaseCharacter_Bind_Mit02_L_End
+    100046: BaseCharacter_Bind_Mit02_L_Jnt
+    100048: BaseCharacter_Bind_Mit02_R_End
+    100050: BaseCharacter_Bind_Mit02_R_Jnt
+    100052: BaseCharacter_Bind_Neckbase_Jnt
+    100054: BaseCharacter_Bind_NeckMid_Jnt
+    100056: BaseCharacter_Bind_Pelvis_End
+    100058: BaseCharacter_Bind_Pelvis_Jnt
+    100060: BaseCharacter_Bind_Pointer01_L_Jnt
+    100062: BaseCharacter_Bind_Pointer01_R_Jnt
+    100064: BaseCharacter_Bind_Pointer02_L_End
+    100066: BaseCharacter_Bind_Pointer02_L_Jnt
+    100068: BaseCharacter_Bind_Pointer02_R_End
+    100070: BaseCharacter_Bind_Pointer02_R_Jnt
+    100072: BaseCharacter_Bind_Shoulder_L_Jnt
+    100074: BaseCharacter_Bind_Shoulder_R_Jnt
+    100076: BaseCharacter_Bind_Thigh_L_Jnt
+    100078: BaseCharacter_Bind_Thigh_R_Jnt
+    100080: BaseCharacter_Bind_Thumb01_L_Jnt
+    100082: BaseCharacter_Bind_Thumb01_R_Jnt
+    100084: BaseCharacter_Bind_Thumb02_L_End
+    100086: BaseCharacter_Bind_Thumb02_L_Jnt
+    100088: BaseCharacter_Bind_Thumb02_R_End
+    100090: BaseCharacter_Bind_Thumb02_R_Jnt
+    100092: //RootNode
+    400000: BaseCharacter_BaseMesh
+    400002: BaseCharacter_Bind_Belly_Jnt
+    400004: BaseCharacter_Bind_Chest_Jnt
+    400006: BaseCharacter_Bind_Clav_L_Jnt
+    400008: BaseCharacter_Bind_Clav_R_Jnt
+    400010: BaseCharacter_Bind_Cog_Jnt
+    400012: BaseCharacter_Bind_Foot_L_End
+    400014: BaseCharacter_Bind_Foot_L_Jnt
+    400016: BaseCharacter_Bind_Foot_R_End
+    400018: BaseCharacter_Bind_Foot_R_Jnt
+    400020: BaseCharacter_Bind_ForeArm01_L_Jnt
+    400022: BaseCharacter_Bind_ForeArm01_R_Jnt
+    400024: BaseCharacter_Bind_ForeArm02_L_Jnt
+    400026: BaseCharacter_Bind_ForeArm02_R_Jnt
+    400028: BaseCharacter_Bind_Hand_L_Jnt
+    400030: BaseCharacter_Bind_Hand_R_Jnt
+    400032: BaseCharacter_Bind_Head_End
+    400034: BaseCharacter_Bind_Head_Jnt
+    400036: BaseCharacter_Bind_Knee_L_Jnt
+    400038: BaseCharacter_Bind_Knee_R_Jnt
+    400040: BaseCharacter_Bind_Mit01_L_Jnt
+    400042: BaseCharacter_Bind_Mit01_R_Jnt
+    400044: BaseCharacter_Bind_Mit02_L_End
+    400046: BaseCharacter_Bind_Mit02_L_Jnt
+    400048: BaseCharacter_Bind_Mit02_R_End
+    400050: BaseCharacter_Bind_Mit02_R_Jnt
+    400052: BaseCharacter_Bind_Neckbase_Jnt
+    400054: BaseCharacter_Bind_NeckMid_Jnt
+    400056: BaseCharacter_Bind_Pelvis_End
+    400058: BaseCharacter_Bind_Pelvis_Jnt
+    400060: BaseCharacter_Bind_Pointer01_L_Jnt
+    400062: BaseCharacter_Bind_Pointer01_R_Jnt
+    400064: BaseCharacter_Bind_Pointer02_L_End
+    400066: BaseCharacter_Bind_Pointer02_L_Jnt
+    400068: BaseCharacter_Bind_Pointer02_R_End
+    400070: BaseCharacter_Bind_Pointer02_R_Jnt
+    400072: BaseCharacter_Bind_Shoulder_L_Jnt
+    400074: BaseCharacter_Bind_Shoulder_R_Jnt
+    400076: BaseCharacter_Bind_Thigh_L_Jnt
+    400078: BaseCharacter_Bind_Thigh_R_Jnt
+    400080: BaseCharacter_Bind_Thumb01_L_Jnt
+    400082: BaseCharacter_Bind_Thumb01_R_Jnt
+    400084: BaseCharacter_Bind_Thumb02_L_End
+    400086: BaseCharacter_Bind_Thumb02_L_Jnt
+    400088: BaseCharacter_Bind_Thumb02_R_End
+    400090: BaseCharacter_Bind_Thumb02_R_Jnt
+    400092: //RootNode
+    4300000: BaseCharacter_BaseMesh
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: BaseCharacter_BaseMesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
