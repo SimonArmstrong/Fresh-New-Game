@@ -6,9 +6,9 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour {
     [System.Serializable]
     public struct Controller {
-        public string dash;
-        public string block;
-        public string pause;
+        public int    dash;
+        public int    block;
+        public int    pause;
         public string moveX;
         public string moveY;
         public string rotX;
