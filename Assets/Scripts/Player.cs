@@ -95,7 +95,7 @@ public class Player : MonoBehaviour {
 
     public void Dash() {
         dashCooldownTimer -= Time.deltaTime;
-        if (Input.GetButtonDown("Jump" + id) && dashCooldownTimer <= 0 && !nearWall) {
+        if (Input.GetAxis("Jump" + id) < 0 && dashCooldownTimer <= 0 && !nearWall) {
             AnimationManager.OnBeginDash();
             GetComponent<TrailRenderer>().enabled = true; 
             moveSpeed = moveSpeed * dashSpeed;
@@ -139,27 +139,28 @@ public class Player : MonoBehaviour {
         transform.position += new Vector3(axisMovement.x, 0, axisMovement.z);
 
         // NOTE: Consider Revising the use of LookAt();
-        //Vector3 direction = transform.position + movement;
+        //Vector3 direction = transform.position + axisMovement;
         //transform.LookAt(direction);
     }
     public void Block() {
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetAxis("Block" + id) < 0) {
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetAxis("Block" + id) > -1) {
+        }
+        else  {
             AnimationManager.OnBeginBlock();
             blocking = true;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetAxis("Block" + id) < 0) {
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetAxis("Block" + id) > -1) {
+            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(0, 0, 0), Time.deltaTime * shieldGrowSpeed);
+            if (shield.transform.localScale.x <= .2f)
+                shield.SetActive(false); blocking = false;
+        }
+        else {
             AnimationManager.OnBlocking();
             moveSpeed = 0;
             shield.SetActive(true);
             shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(2, 2, 2), Time.deltaTime * shieldGrowSpeed);
-
-        }
-        else {
-            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(0, 0, 0), Time.deltaTime * shieldGrowSpeed);
-            if (shield.transform.localScale.x <= .2f)
-                shield.SetActive(false); blocking = false;
         }
     }
 

@@ -7,6 +7,14 @@ public class Spawner : MonoBehaviour {
     public int maxSpawnAmount = 10;
     public int currentSpawned;
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag != "Player")
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         Vector3 center = transform.position;
