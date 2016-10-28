@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
     public Camera cam;
     public GameObject shield;
     public GameObject camFollowPoint;
+    public GameObject mesh;
     public Animator animator;
     public Transform wallSpawnPosition;
     public List<GameObject> dashWallObject = new List<GameObject>();
@@ -182,8 +183,9 @@ public class Player : MonoBehaviour {
         if (axisMovement.magnitude > 0) { AnimationManager.OnRun(gameObject); }
         else { AnimationManager.OnBeginIdle(gameObject); }
         // NOTE: Consider Revising the use of LookAt();
-        //Vector3 direction = transform.position + axisMovement;
-        //transform.LookAt(direction);
+        Vector3 direction = transform.position + axisMovement;
+        direction = new Vector3(direction.x, 0, direction.z);
+        mesh.transform.LookAt(direction);
     }
     public void Block() {
 

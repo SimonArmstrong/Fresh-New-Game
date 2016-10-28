@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour {
-    public List<GameObject> objectsToSpawn;
+    public List<GameObject> objectsToSpawn;    
     public int maxSpawnAmount = 10;
 
     void OnTriggerEnter(Collider other)
@@ -14,13 +14,16 @@ public class Spawner : MonoBehaviour {
         }
     }
 
-    void Start()
-    {
+    void Start() {
+
+    }
+
+    void Update() {
         Vector3 center = transform.position;
-        for (int i = 0; i < maxSpawnAmount; i++)
-        {
-            Vector3 pos = RandomCircle(center, i, gameObject.transform.localScale.x/2);
+        if (maxSpawnAmount < GameManager.currentSpawned) {
+            Vector3 pos = RandomCircle(center, GameManager.currentSpawned, gameObject.transform.localScale.x / 2);
             Instantiate(objectsToSpawn[objectsToSpawn.Count - 1], pos, Quaternion.identity);
+            GameManager.currentSpawned++;
         }
     }
 
@@ -36,8 +39,7 @@ public class Spawner : MonoBehaviour {
     }
     
 
-    void FixedUpdate()
-    {
-        GameManager.currentSpawned = maxSpawnAmount;
+    void FixedUpdate() {
+        //GameManager.currentSpawned = maxSpawnAmount;
     }
 }
