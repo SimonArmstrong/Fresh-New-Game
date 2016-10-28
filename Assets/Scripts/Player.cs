@@ -71,6 +71,7 @@ public class Player : MonoBehaviour {
         {
             Destroy(col.gameObject);
             currentHeld++;
+            GameManager.currentSpawned--;
         }
         //where the player recieves the effect of the powerup
         if (col.tag == "powerup")

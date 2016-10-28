@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class Spawner : MonoBehaviour {
     public List<GameObject> objectsToSpawn;
     public int maxSpawnAmount = 10;
-    public int currentSpawned;
 
     void OnTriggerEnter(Collider other)
     {
@@ -39,5 +38,6 @@ public class Spawner : MonoBehaviour {
 
     void FixedUpdate()
     {
+        GameManager.currentSpawned = maxSpawnAmount;
     }
 }

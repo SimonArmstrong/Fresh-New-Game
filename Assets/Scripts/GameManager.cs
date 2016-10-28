@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
     public static int PLAYER_COUNT;
+    public static int currentSpawned;
     public static List<GameObject> players = new List<GameObject>();
     public GameObject defaultLight;
 
