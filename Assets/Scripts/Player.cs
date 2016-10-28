@@ -96,7 +96,13 @@ public class Player : MonoBehaviour {
         joystickName = "joystick " + (id + 1);
         AnimationManager.OnBeginIdle(gameObject);
         cam.GetComponent<MouseAimCamera>().target = gameObject;
-        Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 8, transform.position.z - 15), Quaternion.FromToRotation(cam.transform.position, transform.position));
+        if (id > 0)
+        {
+            Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 8, transform.position.z - 15), Quaternion.identity);
+        }
+        else {
+            Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 4, transform.position.z - 15), Quaternion.identity);
+        }
         if (GameManager.players.Count == 2)
         {
             GameManager.players[0].GetComponent<Player>().cam.rect = new Rect(0, 0.5f, 1, 1);
@@ -159,6 +165,7 @@ public class Player : MonoBehaviour {
             moveSpeed = speed;
             dashing = false;
             GetComponent<TrailRenderer>().enabled = false;
+            AnimationManager.OnEndDash(gameObject);
         }
         else { AnimationManager.OnDashing(gameObject); }
     }
@@ -178,12 +185,11 @@ public class Player : MonoBehaviour {
     public void Block() {
 
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown(controls.block)) {
-            AnimationManager.OnBeginBlock(gameObject);
             blocking = true;
+            AnimationManager.OnBeginBlock(gameObject);
         }
 
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton(controls.block)) {
-            AnimationManager.OnBlocking(gameObject);
             moveSpeed = 0;
             shield.SetActive(true);
             shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(2, 2, 2), Time.deltaTime * shieldGrowSpeed);
@@ -191,8 +197,14 @@ public class Player : MonoBehaviour {
         else {
             shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(0, 0, 0), Time.deltaTime * shieldGrowSpeed);
             if (shield.transform.localScale.x <= .2f)
-                shield.SetActive(false); blocking = false;
+            {
+                shield.SetActive(false);
+                blocking = false;
+                AnimationManager.OnEndBlock(gameObject);
+            }
         }
+
+        if(blocking) AnimationManager.OnBlocking(gameObject);
     }
 
     // Update is called once per frame
