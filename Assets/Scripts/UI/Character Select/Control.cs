@@ -12,6 +12,7 @@ public class Control : MonoBehaviour {
     public GameObject mainMenuScreen;
     public GameObject readyScreen;
     public GameObject defaultPlayer;
+    public GameObject defaultLight;
     public int playerCount = 1;
 
     public List<GameObject> menuContext = new List<GameObject>();
@@ -84,9 +85,9 @@ public class Control : MonoBehaviour {
                         playerSelectImages[i].on = true;
                     }
                 }
-                if (canReady && Input.GetKeyDown((KeyCode)359)) {
+                if (canReady && Input.GetKeyDown((KeyCode)359)) { 
                     SceneManager.LoadScene(1);
-
+                    
                     for(int j = 0; j < controllerCount; j++) {
                         GameManager.players.Add(defaultPlayer);
                         //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();

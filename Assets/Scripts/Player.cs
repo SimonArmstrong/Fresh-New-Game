@@ -6,9 +6,9 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour {
     [System.Serializable]
     public struct Controller {
-        public int    dash;
-        public int    block;
-        public int    pause;
+        public string dash;
+        public string block;
+        public string pause;
         public string moveX;
         public string moveY;
         public string rotX;
@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 
     public Camera cam;
     public GameObject shield;
+    public GameObject camFollowPoint;
+    public Animator animator;
     public Transform wallSpawnPosition;
     public List<GameObject> dashWallObject = new List<GameObject>();
     public float shieldGrowSpeed;
@@ -92,9 +94,9 @@ public class Player : MonoBehaviour {
         placementSkin = wallPlaceDistance;
         holdingOrb = false;
         joystickName = "joystick " + (id + 1);
-
+        AnimationManager.OnBeginIdle(gameObject);
         cam.GetComponent<MouseAimCamera>().target = gameObject;
-        Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 5), Quaternion.FromToRotation(cam.transform.position, transform.position));
+        Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 8, transform.position.z - 15), Quaternion.FromToRotation(cam.transform.position, transform.position));
         if (GameManager.players.Count == 2)
         {
             GameManager.players[0].GetComponent<Player>().cam.rect = new Rect(0, 0.5f, 1, 1);
@@ -113,12 +115,18 @@ public class Player : MonoBehaviour {
             GameManager.players[2].GetComponent<Player>().cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
             GameManager.players[3].GetComponent<Player>().cam.rect = new Rect(0.5f, -0.5f, 1, 1);
         }
+
+
+        controls.moveX = "Horizontal" + id;
+        controls.moveY = "Vertical" + id;
+        controls.block = "Block" + id;
+        controls.dash  = "Dash" + id;
     }
 
     public void Dash() {
         dashCooldownTimer -= Time.deltaTime;
-        if (Input.GetAxis("Jump" + id) < 0 && dashCooldownTimer <= 0 && !nearWall || Input.GetButtonDown("Dash" + id) && dashCooldownTimer <= 0 && !nearWall) {
-            AnimationManager.OnBeginDash();
+        if (Input.GetButtonDown(controls.dash) && dashCooldownTimer <= 0 && !nearWall || Input.GetButtonDown(controls.dash) && dashCooldownTimer <= 0 && !nearWall) {
+            AnimationManager.OnBeginDash(gameObject);
             GetComponent<TrailRenderer>().enabled = true; 
             moveSpeed = moveSpeed * dashSpeed;
             dashCooldownTimer = dashCooldown;
@@ -152,38 +160,38 @@ public class Player : MonoBehaviour {
             dashing = false;
             GetComponent<TrailRenderer>().enabled = false;
         }
-        else { AnimationManager.OnDashing(); }
+        else { AnimationManager.OnDashing(gameObject); }
     }
     public void Movement() {
-        Debug.Log("Player 2: " + Input.GetAxis("Horizontal" + 1));
-        Vector3 axisMovement = new Vector3(Input.GetAxis("Horizontal" + id), 0, Input.GetAxis("Vertical" + id)).normalized * moveSpeed * Time.deltaTime;
-        axisMovement = cam.transform.TransformDirection(axisMovement);
+        Vector3 axisMovement = new Vector3(Input.GetAxis(controls.moveX), 0, Input.GetAxis(controls.moveY)).normalized * moveSpeed * Time.deltaTime;
+        axisMovement = Camera.allCameras[id].transform.TransformDirection(axisMovement);
 
         transform.position += new Vector3(axisMovement.x, 0, axisMovement.z);
 
+
+        if (axisMovement.magnitude > 0) { AnimationManager.OnRun(gameObject); }
+        else { AnimationManager.OnBeginIdle(gameObject); }
         // NOTE: Consider Revising the use of LookAt();
         //Vector3 direction = transform.position + axisMovement;
         //transform.LookAt(direction);
     }
     public void Block() {
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetAxis("Block" + id) > -1) {
-        }
-        else  {
-            AnimationManager.OnBeginBlock();
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown(controls.block)) {
+            AnimationManager.OnBeginBlock(gameObject);
             blocking = true;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetAxis("Block" + id) > -1) {
-            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(0, 0, 0), Time.deltaTime * shieldGrowSpeed);
-            if (shield.transform.localScale.x <= .2f)
-                shield.SetActive(false); blocking = false;
-        }
-        else {
-            AnimationManager.OnBlocking();
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton(controls.block)) {
+            AnimationManager.OnBlocking(gameObject);
             moveSpeed = 0;
             shield.SetActive(true);
             shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(2, 2, 2), Time.deltaTime * shieldGrowSpeed);
+        }
+        else {
+            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(0, 0, 0), Time.deltaTime * shieldGrowSpeed);
+            if (shield.transform.localScale.x <= .2f)
+                shield.SetActive(false); blocking = false;
         }
     }
 
