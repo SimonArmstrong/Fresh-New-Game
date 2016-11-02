@@ -99,6 +99,7 @@ public class Player : MonoBehaviour {
         AnimationManager.OnBeginIdle(gameObject);
         cam.GetComponent<MouseAimCamera>().target = gameObject;
         Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 8, transform.position.z - 15), Quaternion.identity);
+        gameObject.transform.GetChild(2).gameObject.SetActive(false);
 
         if (GameManager.players.Count == 2) {
             if (id == 0) cam.rect = new Rect(0,  0.5f, 1, 1);
