@@ -56,21 +56,19 @@ public class Control : MonoBehaviour {
 
         if (!isPlaystation) //-DIRECT X-
         {
-            if (Input.GetKeyDown((KeyCode)(350))) {
+            if (Input.GetButtonDown("Submit" + controllerCount)) {
                 swapToCharacterSelect = true;
                 swapToMainMenu = false;
             }
             if (swapToCharacterSelect)
             {
-                for (int i = controllerCount; i < 4; i++)
+                if (Input.GetButtonDown("Submit" + controllerCount))
                 {
-                    if (Input.GetKeyDown((KeyCode)(350 + (controllerCount * 20) + 0)))
-                    {
-                        playerSelectImages[controllerCount].on = true;
-                        controllerCount++;
-                    }
+                    playerSelectImages[controllerCount].on = true;
+                    controllerCount++;
                 }
-                if (Input.GetKeyDown((KeyCode)357))
+
+                if (Input.GetButtonDown("Pause" + controllerCount))
                 {
                     SceneManager.LoadScene(1);
 
