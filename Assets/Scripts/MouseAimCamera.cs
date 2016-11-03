@@ -22,6 +22,6 @@ public class MouseAimCamera : MonoBehaviour {
 		
 		transform.LookAt(target.transform);
 
-        scoreText.text = target.GetComponent<Player>().score.ToString();
+        //scoreText.text = target.GetComponent<Player>().score.ToString();
 	}
 }
