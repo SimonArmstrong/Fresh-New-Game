@@ -104,32 +104,24 @@ public class Player : MonoBehaviour {
         {
             if (id == 0) cam.rect = new Rect(0, 0, 1, 1);
         }
-
         if (GameManager.players.Count == 2) {
             if (id == 0) cam.rect = new Rect(0,  0.5f, 1, 1);
             if (id == 1) cam.rect = new Rect(0, -0.5f, 1, 1);
         }
-
-        /*
-        if (GameManager.players.Count == 2)
-        {
-            GameManager.players[0].GetComponent<Player>().cam.rect = new Rect(0, 0.5f, 1, 1);
-            GameManager.players[1].GetComponent<Player>().cam.rect = new Rect(0, -0.5f, 1, 1);
-        }
         if (GameManager.players.Count == 3)
         {
-            GameManager.players[0].GetComponent<Player>().cam.rect = new Rect(0, 0.5f, 1, 1);
-            GameManager.players[1].GetComponent<Player>().cam.rect = new Rect(0, -0.5f, 1, 1);
-            GameManager.players[2].GetComponent<Player>().cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
+            if (id == 0) cam.rect = new Rect(0, 0.5f, 1, 1);
+            if (id == 1) cam.rect = new Rect(0, -0.5f, 1, 1);
+            if (id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
         }
         if (GameManager.players.Count == 4)
         {
-            GameManager.players[0].GetComponent<Player>().cam.rect = new Rect(-.5f, 0.5f, 1, 1);
-            GameManager.players[1].GetComponent<Player>().cam.rect = new Rect(.5f, .5f, 1, 1);
-            GameManager.players[2].GetComponent<Player>().cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
-            GameManager.players[3].GetComponent<Player>().cam.rect = new Rect(0.5f, -0.5f, 1, 1);
+            if(id == 0) cam.rect = new Rect(-.5f, 0.5f, 1, 1);
+            if(id == 1) cam.rect = new Rect(.5f, .5f, 1, 1);
+            if(id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
+            if(id == 3) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
         }
-        */
+
 
 
         controls.moveX = "Horizontal" + id;
