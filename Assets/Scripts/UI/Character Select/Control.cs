@@ -6,6 +6,10 @@ using System.Collections.Generic;
 
 public class Control : MonoBehaviour {
 
+    public struct Controller {
+        public int joyNum;
+    }
+
     public Color filteredColor;
     public List<PlayerPanel> playerSelectImages = new List<PlayerPanel>();
     public GameObject characterSelectScreen;
@@ -21,6 +25,8 @@ public class Control : MonoBehaviour {
 
     public int controllerCount;
 
+    public List<Controller> controllers = new List<Controller>();
+
     // 350 is joy1, 20 nums between each joy // -DUALSHOCK-
     // 350 is joy1, 20 nums between each joy // -DIRECT X -
 
@@ -34,6 +40,7 @@ public class Control : MonoBehaviour {
 
     void Start() {
         selectedIndex = 0;
+        controllerCount = 0;
     }
 
     void Update () {
@@ -47,21 +54,23 @@ public class Control : MonoBehaviour {
             }
         }
 
-            if (!isPlaystation) //-DIRECT X-
+        if (!isPlaystation) //-DIRECT X-
+        {
+            if (Input.GetKeyDown((KeyCode)(350))) {
+                swapToCharacterSelect = true;
+                swapToMainMenu = false;
+            }
+            if (swapToCharacterSelect)
             {
-                if (Input.GetKeyDown(KeyCode.Joystick1Button0)) {
-                    swapToCharacterSelect = true;
-                    swapToMainMenu = false;
-                }
                 for (int i = controllerCount; i < 4; i++)
                 {
-                    if (Input.GetKeyDown((KeyCode)(350 + (i * 20) + 0)))
+                    if (Input.GetKeyDown((KeyCode)(350 + (controllerCount * 20) + 0)))
                     {
+                        playerSelectImages[controllerCount].on = true;
                         controllerCount++;
-                        playerSelectImages[i].on = true;
                     }
                 }
-                if (canReady && Input.GetKeyDown((KeyCode)357))
+                if (Input.GetKeyDown((KeyCode)357))
                 {
                     SceneManager.LoadScene(1);
 
@@ -73,28 +82,30 @@ public class Control : MonoBehaviour {
                     }
                 }
             }
-            else                //-DUALSHOCK-
-            {
-                if (Input.GetKeyDown(KeyCode.Joystick1Button1)) {
-                    swapToCharacterSelect = true;
-                    swapToMainMenu = false;
-                }
-                for (int i = controllerCount; i < 4; i++) {
-                    if (Input.GetKeyDown((KeyCode)(350 + (i * 20) + 1))) {
-                        controllerCount++;
-                        playerSelectImages[i].on = true;
-                    }
-                }
-                if (canReady && Input.GetKeyDown((KeyCode)359)) { 
-                    SceneManager.LoadScene(1);
-                    
-                    for(int j = 0; j < controllerCount; j++) {
-                        GameManager.players.Add(defaultPlayer);
-                        //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
-                        //GameManager.players[i].GetComponent<Player>().controls.dash
-                    }
+        }
+        else                //-DUALSHOCK-
+        {
+            if (Input.GetKeyDown(KeyCode.Joystick1Button1)) {
+                swapToCharacterSelect = true;
+                swapToMainMenu = false;
+            }
+            for (int i = controllerCount; i < 4; i++) {
+                if (Input.GetKeyDown((KeyCode)(350 + (i * 20) + 1))) {
+                    controllerCount++;
+                    playerSelectImages[i].on = true;
                 }
             }
+            if (canReady && Input.GetKeyDown((KeyCode)359)) { 
+                SceneManager.LoadScene(1);
+                    
+                for(int j = 0; j < controllerCount; j++) {
+                    GameManager.players.Add(defaultPlayer);
+                    //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
+                    //GameManager.players[i].GetComponent<Player>().controls.dash
+                }
+            }
+        }
+
         if (controllerCount > 1) {
             canReady = true;
         }
