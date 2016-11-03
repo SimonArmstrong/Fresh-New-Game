@@ -13,6 +13,6 @@ public class GameManager : MonoBehaviour {
             players[i].GetComponent<Player>().id = i;
             Instantiate(players[i], new Vector3(0, 1, 5 * i), Quaternion.identity);
         }
-        Instantiate(defaultLight, Vector3.zero, Quaternion.LookRotation(new Vector3(45, -50, 45)));
+        //Instantiate(defaultLight, Vector3.zero, Quaternion.LookRotation(new Vector3(45, -50, 45)));
     }
 }
