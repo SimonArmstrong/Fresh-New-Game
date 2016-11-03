@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour {
 
     void Update() {
         Vector3 center = transform.position;
-        if (maxSpawnAmount < GameManager.currentSpawned) {
+        if (maxSpawnAmount > GameManager.currentSpawned) {
             Vector3 pos = RandomCircle(center, GameManager.currentSpawned, gameObject.transform.localScale.x / 2);
             Instantiate(objectsToSpawn[objectsToSpawn.Count - 1], pos, Quaternion.identity);
             GameManager.currentSpawned++;

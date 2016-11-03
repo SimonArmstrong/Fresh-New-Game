@@ -98,7 +98,7 @@ public class Player : MonoBehaviour {
         joystickName = "joystick " + (id + 1);
         AnimationManager.OnBeginIdle(gameObject);
         cam.GetComponent<MouseAimCamera>().target = gameObject;
-        Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 8, transform.position.z - 15), Quaternion.identity);
+        Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
 
         if (GameManager.players.Count == 2) {
             if (id == 0) cam.rect = new Rect(0,  0.5f, 1, 1);

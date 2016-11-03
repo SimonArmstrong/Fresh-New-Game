@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class MouseAimCamera : MonoBehaviour {
 	public GameObject target;
+    public Text scoreText;
 	public float rotateSpeed = 5;
 	Vector3 offset;
 	
@@ -19,5 +21,7 @@ public class MouseAimCamera : MonoBehaviour {
 		transform.position = target.transform.position - (rotation * offset);
 		
 		transform.LookAt(target.transform);
+
+        scoreText.text = target.GetComponent<Player>().score.ToString();
 	}
 }
