@@ -6,7 +6,7 @@ public class PointOrb : MonoBehaviour {
 
     void OnTriggerEnter(Collider col) {
         Debug.Log("HIT");
-        if (col.tag == "dropZone")
+        if (col.tag != "Player")
         {
             canSpawn = false;
         }
