@@ -10,6 +10,8 @@ public class Control : MonoBehaviour {
         public int joyNum;
     }
 
+    public bool keyboard;
+
     public Color filteredColor;
     public List<PlayerPanel> playerSelectImages = new List<PlayerPanel>();
     public GameObject characterSelectScreen;
@@ -18,7 +20,6 @@ public class Control : MonoBehaviour {
     public GameObject defaultPlayer;
     public GameObject defaultLight;
     public int playerCount = 0;
-    int[] playerNum = new int[4];
 
     public List<GameObject> menuContext = new List<GameObject>();
     public GameObject highlightSprite;
@@ -32,12 +33,12 @@ public class Control : MonoBehaviour {
     // 350 is joy1, 20 nums between each joy // -DIRECT X -
 
     //flags
-    private bool   swapToCharacterSelect = false;
-    private bool   swapToMainMenu = false;
-    private bool   isPlaystation = false;
-    private bool   nextPress = true;
-    private bool   canReady = false;
-    public string contextOrientation = "Vertical";
+    private bool   swapToCharacterSelect    = false;
+    private bool   swapToMainMenu           = false;
+    private bool   isPlaystation            = false;
+    private bool   nextPress                = true;
+    private bool   canReady                 = false;
+    public string  contextOrientation       = "Vertical";
 
     void Start() {
         selectedIndex = 0;
@@ -58,22 +59,29 @@ public class Control : MonoBehaviour {
 
         if (!isPlaystation) //-DIRECT X-
         {
-            for (int i = 0; i < controllerCount; i++) {
-                if (Input.GetButtonDown("Submit" + i)) {
-                    swapToCharacterSelect = true;
-                    swapToMainMenu = false;
-                }
-                if (swapToCharacterSelect)
+            if (!keyboard)
+            {
+                for (int i = 0; i < controllerCount; i++)
                 {
-                    if (Input.GetButtonDown("Cancel" + i)) {
-                        playerSelectImages[i].on = false;
-                        playerCount--;
-
+                    if (Input.GetButtonDown("Submit" + i))
+                    {
+                        swapToCharacterSelect = true;
+                        swapToMainMenu = false;
                     }
+                    if (swapToCharacterSelect)
+                    {
+                        if (Input.GetButtonDown("Cancel" + i))
+                        {
+                            playerSelectImages[i].on = false;
+                            playerCount--;
 
-                    if (Input.GetButtonDown("Submit" + i)) {
-                        playerSelectImages[i].on = true;
-                        playerCount++;
+                        }
+
+                        if (Input.GetButtonDown("Submit" + i))
+                        {
+                            playerSelectImages[i].on = true;
+                            playerCount++;
+                        }
                     }
                 }
             }
@@ -82,7 +90,8 @@ public class Control : MonoBehaviour {
                 Debug.Log("Player Count = " + playerCount);
                 for (int j = 0; j < 4; j++)
                 {
-                    if (playerSelectImages[j].on) {
+                    if (playerSelectImages[j].on)
+                    {
                         Debug.Log("playerSelectImage[" + j + "] = " + playerSelectImages[j].num);
                         GameManager.playerIDS.Add(playerSelectImages[j].num);
                     }

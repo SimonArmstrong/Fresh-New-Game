@@ -30,6 +30,13 @@ public class AnimationManager {
         sender.GetComponent<Player>().animator.SetBool("running", false);
     }
 
+    public static void OnGetStunned(GameObject sender) {
+        sender.GetComponent<Player>().animator.SetBool("stunned", true);
+    }
+    public static void OnEndStunned(GameObject sender) {
+        sender.GetComponent<Player>().animator.SetBool("stunned", false);
+    }
+
     void Update() {
 
     }
