@@ -3,6 +3,10 @@ using System.Collections;
 
 public class PointOrb : MonoBehaviour {
 
-    public int value;
-
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag != "Player")
+        {
+        }
+    }
 }

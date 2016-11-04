@@ -67,7 +67,8 @@ public class Control : MonoBehaviour {
                 {
                     if (Input.GetButtonDown("Cancel" + i)) {
                         playerSelectImages[i].on = false;
-                        playerCount++;
+                        playerCount--;
+
                     }
 
                     if (Input.GetButtonDown("Submit" + i)) {

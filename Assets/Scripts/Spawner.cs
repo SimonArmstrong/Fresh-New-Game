@@ -6,13 +6,6 @@ public class Spawner : MonoBehaviour {
     public List<GameObject> objectsToSpawn;    
     public int maxSpawnAmount = 10;
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag != "Player")
-        {
-            Destroy(gameObject);
-        }
-    }
 
     void Start() {
 
@@ -40,6 +33,5 @@ public class Spawner : MonoBehaviour {
     
 
     void FixedUpdate() {
-        //GameManager.currentSpawned = maxSpawnAmount;
     }
 }
