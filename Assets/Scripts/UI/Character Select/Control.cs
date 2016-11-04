@@ -17,7 +17,8 @@ public class Control : MonoBehaviour {
     public GameObject readyScreen;
     public GameObject defaultPlayer;
     public GameObject defaultLight;
-    public int playerCount = 1;
+    public int playerCount = 0;
+    int[] playerNum = new int[4];
 
     public List<GameObject> menuContext = new List<GameObject>();
     public GameObject highlightSprite;
@@ -40,7 +41,8 @@ public class Control : MonoBehaviour {
 
     void Start() {
         selectedIndex = 0;
-        controllerCount = 0;
+        controllerCount = Input.GetJoystickNames().GetLength(0);
+        controllerCount = Mathf.Clamp(controllerCount, 0, 4);
     }
 
     void Update () {
@@ -56,29 +58,41 @@ public class Control : MonoBehaviour {
 
         if (!isPlaystation) //-DIRECT X-
         {
-            if (Input.GetButtonDown("Submit" + controllerCount)) {
-                swapToCharacterSelect = true;
-                swapToMainMenu = false;
-            }
-            if (swapToCharacterSelect)
-            {
-                if (Input.GetButtonDown("Submit" + controllerCount))
-                {
-                    playerSelectImages[controllerCount].on = true;
-                    controllerCount++;
+            for (int i = 0; i < controllerCount; i++) {
+                if (Input.GetButtonDown("Submit" + i)) {
+                    swapToCharacterSelect = true;
+                    swapToMainMenu = false;
                 }
-
-                if (Input.GetButtonDown("Pause" + controllerCount))
+                if (swapToCharacterSelect)
                 {
-                    SceneManager.LoadScene(1);
+                    if (Input.GetButtonDown("Cancel" + i)) {
+                        playerSelectImages[i].on = false;
+                        playerCount++;
+                    }
 
-                    for (int j = 0; j < controllerCount; j++)
-                    {
-                        GameManager.players.Add(defaultPlayer);
-                        //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
-                        //GameManager.players[i].GetComponent<Player>().controls.dash
+                    if (Input.GetButtonDown("Submit" + i)) {
+                        playerSelectImages[i].on = true;
+                        playerCount++;
                     }
                 }
+            }
+            if (Input.GetButtonDown("Pause" + 0))
+            {
+                Debug.Log("Player Count = " + playerCount);
+                for (int j = 0; j < 4; j++)
+                {
+                    if (playerSelectImages[j].on) {
+                        Debug.Log("playerSelectImage[" + j + "] = " + playerSelectImages[j].num);
+                        GameManager.playerIDS.Add(playerSelectImages[j].num);
+                    }
+                    //defaultPlayer.GetComponent<Player>().id = playerNum[j];
+                    //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
+                    //GameManager.players[i].GetComponent<Player>().controls.dash
+                }
+                for (int j = 0; j < playerCount; j++)
+                    GameManager.players.Add(defaultPlayer);
+
+                SceneManager.LoadScene(1);
             }
         }
         else                //-DUALSHOCK-
@@ -105,7 +119,7 @@ public class Control : MonoBehaviour {
         }
 
         if (controllerCount > 1) {
-            canReady = true;
+            //canReady = true;
         }
 
         if (canReady) {

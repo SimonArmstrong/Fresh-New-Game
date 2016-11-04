@@ -49,6 +49,8 @@ public class Player : MonoBehaviour {
     public ParticleSystem collisionParticle;
 
     public int id;
+    public int inputID;
+
     public string joystickName;
 
     public bool dashMode = false;
@@ -95,23 +97,23 @@ public class Player : MonoBehaviour {
         blocking = false;
         placementSkin = wallPlaceDistance;
         holdingOrb = false;
-        joystickName = "joystick " + (id + 1);
+        joystickName = "joystick " + (inputID + 1);
         AnimationManager.OnBeginIdle(gameObject);
+
         cam.GetComponent<MouseAimCamera>().target = gameObject;
         Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
-
-        if (GameManager.players.Count == 1)
-        {
+        Debug.Log(GameManager.players.Count + " Players");
+        if (GameManager.players.Count == 1) {
             if (id == 0) cam.rect = new Rect(0, 0, 1, 1);
         }
         if (GameManager.players.Count == 2) {
-            if (id == 0) cam.rect = new Rect(0,  0.5f, 1, 1);
-            if (id == 1) cam.rect = new Rect(0, -0.5f, 1, 1);
+            if (id == 0) cam.rect = new Rect(0, -0.5f, 1, 1);
+            if (id == 1) cam.rect = new Rect(0, 0.5f, 1, 1);
         }
         if (GameManager.players.Count == 3)
         {
             if (id == 0) cam.rect = new Rect(0, 0.5f, 1, 1);
-            if (id == 1) cam.rect = new Rect(0, -0.5f, 1, 1);
+            if (id == 1) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
             if (id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
         }
         if (GameManager.players.Count == 4)
@@ -122,12 +124,10 @@ public class Player : MonoBehaviour {
             if(id == 3) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
         }
 
-
-
-        controls.moveX = "Horizontal" + id;
-        controls.moveY = "Vertical" + id;
-        controls.block = "Block" + id;
-        controls.dash  = "Dash" + id;
+        controls.moveX = "Horizontal" + inputID;
+        controls.moveY = "Vertical" + inputID;
+        controls.block = "Block" + inputID;
+        controls.dash  = "Dash" + inputID;
     }
 
     public void Dash() {

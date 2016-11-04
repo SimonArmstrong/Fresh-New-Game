@@ -4,6 +4,7 @@ using System.Collections;
 
 public class PlayerPanel : MonoBehaviour {
     public bool on;
+    public int num;
     public Image image;
 
     public string ownerController;
