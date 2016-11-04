@@ -3,19 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour {
-    public List<GameObject> objectsToSpawn;    
+    public GameObject objectToSpawn;
+    public List<GameObject> objectsToSpawn;
     public int maxSpawnAmount = 10;
 
 
-    void Start() {
-
-    }
-
-    void Update() {
+    void Awake() {
         Vector3 center = transform.position;
-        if (maxSpawnAmount > GameManager.currentSpawned) {
+        for (int i = 0; i < maxSpawnAmount; i++)
+        {
             Vector3 pos = RandomCircle(center, GameManager.currentSpawned, gameObject.transform.localScale.x / 2);
-            Instantiate(objectsToSpawn[objectsToSpawn.Count - 1], pos, Quaternion.identity);
+            objectsToSpawn.Add(Instantiate(objectToSpawn, pos, Quaternion.identity) as GameObject);
             GameManager.currentSpawned++;
         }
     }
@@ -32,6 +30,14 @@ public class Spawner : MonoBehaviour {
     }
     
 
-    void FixedUpdate() {
+    void Update() {
+        
+        for (int i = 0; i < objectsToSpawn.Count; i++)
+        {
+            if (objectsToSpawn[i].GetComponent<PointOrb>().canSpawn && objectsToSpawn[i] != null)
+            {
+                objectsToSpawn[i].SetActive(objectsToSpawn[i].GetComponent<PointOrb>().canSpawn);
+            }
+        }
     }
 }
