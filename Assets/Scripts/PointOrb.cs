@@ -6,9 +6,9 @@ public class PointOrb : MonoBehaviour {
 
     void OnTriggerEnter(Collider col) {
         if (col.tag != "Player") {
-            canSpawn = false;
+            //canSpawn = false;
         }
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
     void Start() {
         //gameObject.SetActive(false);

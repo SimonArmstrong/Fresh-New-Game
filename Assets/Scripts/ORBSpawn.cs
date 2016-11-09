@@ -30,10 +30,14 @@ public class ORBSpawn : MonoBehaviour {
 	void Update () {
         if (orbInstance == null) {
             Vector3 spawnPosition = GetRandomPointInRadius(40);
-            GameObject spawnCheck = new GameObject("Spawn Check", System.Type.GetType("BoxCollider"), System.Type.GetType("CollisionCheck"));
-            spawnCheck = Instantiate(spawnCheck, spawnPosition, Quaternion.identity) as GameObject;
-            if(!spawnCheck.GetComponent<CollisionCheck>().colliding)
+            GameObject spawnCheck = new GameObject("Spawn Check", System.Type.GetType("CollisionCheck"));
+            spawnCheck.AddComponent<BoxCollider>();
+            spawnCheck.transform.position = spawnPosition;
+            if (!spawnCheck.GetComponent<CollisionCheck>().colliding) {
+                Destroy(spawnCheck);
                 orbInstance = Instantiate(Orb, spawnPosition, Quaternion.identity) as GameObject;
+            }
+            else { spawnPosition = GetRandomPointInRadius(40); }
         }        
 	}
 }

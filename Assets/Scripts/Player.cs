@@ -211,7 +211,7 @@ public class Player : MonoBehaviour {
             // NOTE: Consider Revising the use of LookAt();
             Vector3 direction = transform.position + axisMovement;
             direction = new Vector3(direction.x, 0, direction.z);
-            mesh.transform.LookAt(direction);
+            if (direction.magnitude > .4f) mesh.transform.LookAt(direction);
             stunTimer = 0;
         }
     }
