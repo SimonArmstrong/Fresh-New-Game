@@ -37,6 +37,7 @@ public class Player : MonoBehaviour {
     public float wallPlaceDistance;
     public Controller controls;
     public GameObject HUD;
+    public Transform hand;
 
     public int score;
     public int currentHeld;
@@ -63,6 +64,7 @@ public class Player : MonoBehaviour {
     public string joystickName;
 
     public bool dashMode = false;
+    private GameObject heldOrb;
 
     private void OnTriggerStay(Collider col) {
         if (col.tag != "Player" && col.tag != "dropZone" && col.tag != "pointOrb") {
@@ -71,18 +73,17 @@ public class Player : MonoBehaviour {
         }
         //increments a players score when you drop off orbs
         if (col.tag == "dropZone") {
-            score += currentHeld;
-            currentHeld -= currentHeld;
+            if (heldOrb != null) {
+                Destroy(heldOrb);
+                score++;
+            }
         }
     }
 
     private void OnTriggerEnter(Collider col) {
         //when the player picks up the orb
-        if (col.tag == "pointOrb")
-        {
-            Destroy(col.gameObject);
-            currentHeld++;
-            GameManager.currentSpawned--;
+        if (col.tag == "pointOrb") {
+            heldOrb = col.gameObject;
         }
         //where the player recieves the effect of the powerup
         if (col.tag == "powerup")
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour {
         if(col.tag == "Player") {
             if (col.gameObject.GetComponent<Player>().inputID != inputID && col.gameObject.GetComponent<Player>().dashing && !blocking) {
                 stunTimer = stunTime;
+                moveSpeed = 0;
                 Debug.Log("HIT");
                 AnimationManager.OnGetStunned(gameObject);
             }
@@ -187,16 +189,16 @@ public class Player : MonoBehaviour {
                 scaleDashCollision = 1.5f;
             }
             stunTimer = 0;
-        }
 
-        if (dashDistance <= 0) {
-            moveSpeed = speed;
-            dashing = false;
-            scaleDashCollision = 1;
-            GetComponent<TrailRenderer>().enabled = false;
-            AnimationManager.OnEndDash(gameObject);
+            if (dashDistance <= 0) {
+                moveSpeed = speed;
+                dashing = false;
+                scaleDashCollision = 1;
+                GetComponent<TrailRenderer>().enabled = false;
+                AnimationManager.OnEndDash(gameObject);
+            }
+            else { AnimationManager.OnDashing(gameObject); }
         }
-        else { AnimationManager.OnDashing(gameObject); }
     }
     public void Movement() {
         if (stunTimer <= 0)
@@ -236,24 +238,17 @@ public class Player : MonoBehaviour {
                 AnimationManager.OnEndBlock(gameObject);
             }
         }
-
-        if(blocking) AnimationManager.OnBlocking(gameObject);
     }
 
     // Update is called once per frame
     void FixedUpdate () {
         dashCollision.size = new Vector3(2.51f, 0.97f, 1.3f) * scaleDashCollision;
         stunTimer -= Time.deltaTime;
+        if (stunTimer > 0 && !blocking) moveSpeed = speed;
 
-        Block();
         Dash();
+        Block();
         Movement();
-
-        if (!dashMode) {
-            if (Input.GetKeyDown(KeyCode.E)) {
-
-            }
-        }
 
         if (nearWall) {
             nearWall = false;
@@ -263,14 +258,8 @@ public class Player : MonoBehaviour {
         //returns true if your score is greater than 0
         holdingOrb = currentHeld > 0;
 
-        //displays whether or not a player is holding an orb
-        if (holdingOrb == true)
-        {
-            hasOrbSprite.SetActive(true);
-        }
-        else
-        {
-            hasOrbSprite.SetActive(false);
+        if(heldOrb != null) {
+            heldOrb.transform.position = hand.position;
         }
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
     }

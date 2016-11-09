@@ -4,9 +4,9 @@ using System.Collections;
 public class PointOrb : MonoBehaviour {
     public bool canSpawn = true;
 
-    void OnTriggerEnter(Collider col) {
-        if (col.tag != "Player") {
-            //canSpawn = false;
+    void OnTriggerStay(Collider col) {
+        if (col.tag == "Player") {
+            //gameObject.transform.position = col.gameObject.GetComponent<Player>().hand.position;
         }
         //gameObject.SetActive(false);
     }

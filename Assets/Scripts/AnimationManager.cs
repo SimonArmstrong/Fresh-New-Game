@@ -31,10 +31,10 @@ public class AnimationManager {
     }
 
     public static void OnGetStunned(GameObject sender) {
-        sender.GetComponent<Player>().animator.SetBool("stunned", true);
+        sender.GetComponent<Player>().animator.SetTrigger("stunned");
     }
     public static void OnEndStunned(GameObject sender) {
-        sender.GetComponent<Player>().animator.SetBool("stunned", false);
+        //sender.GetComponent<Player>().animator.SetBool("stunned", false);
     }
 
     void Update() {
