@@ -70,8 +70,7 @@ public class Player : MonoBehaviour {
             moveSpeed = speed;
         }
         //increments a players score when you drop off orbs
-        if (col.tag == "dropZone")
-        {
+        if (col.tag == "dropZone") {
             score += currentHeld;
             currentHeld -= currentHeld;
         }
@@ -118,8 +117,9 @@ public class Player : MonoBehaviour {
         joystickName = "joystick " + (inputID + 1);
         AnimationManager.OnBeginIdle(gameObject);
 
-        cam.GetComponent<CamFollow>().target = gameObject;
+        cam.GetComponent<MouseAimCamera>().target = gameObject;
         Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
+
         Debug.Log(GameManager.players.Count + " Players");
 
         if (GameManager.players.Count == 1) {
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour {
         controls.dash  = "Dash" + inputID;
         //stunTimer = stunTime;
         HUD.GetComponent<Canvas>().worldCamera = Camera.allCameras[id];
-        Camera.allCameras[id].GetComponent<CamFollow>().scoreText = HUD.GetComponentsInChildren<Text>()[1];
+        Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText = HUD.GetComponentsInChildren<Text>()[1];
     }
 
     public void Dash() {
@@ -272,6 +272,6 @@ public class Player : MonoBehaviour {
         {
             hasOrbSprite.SetActive(false);
         }
-        Camera.allCameras[id].GetComponent<CamFollow>().scoreText.text = score.ToString();
+        Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
     }
 }

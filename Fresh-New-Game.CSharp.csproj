@@ -120,8 +120,10 @@
     <Compile Include="Assets\Scripts\BasicFollow.cs" />
     <Compile Include="Assets\Scripts\CamFollow.cs" />
     <Compile Include="Assets\Scripts\CharacterSelect.cs" />
+    <Compile Include="Assets\Scripts\CollisionCheck.cs" />
     <Compile Include="Assets\Scripts\DestroyAfter.cs" />
     <Compile Include="Assets\Scripts\DungeonCamera.cs" />
+    <Compile Include="Assets\Scripts\FeetManager.cs" />
     <Compile Include="Assets\Scripts\FollowCamera.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InitParticles.cs" />
