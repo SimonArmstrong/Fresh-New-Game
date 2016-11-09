@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 4af5aef65b967664780457e2dd2148a1
-timeCreated: 1477622657
+guid: 92e649c2b364ee348845d66974a7a024
+timeCreated: 1478651646
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: rock_stack
+    4300000: polySurface1
     9500000: //RootNode
   materials:
     importMaterials: 1
