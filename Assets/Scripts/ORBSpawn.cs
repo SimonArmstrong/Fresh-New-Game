@@ -29,7 +29,10 @@ public class ORBSpawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (orbInstance == null) {
-            orbInstance = Instantiate(Orb, GetRandomPointInRadius(40), Quaternion.identity) as GameObject;
+            Vector3 spawnPosition = GetRandomPointInRadius(40);
+            GameObject spawnCheck = new GameObject("Spawn Check", System.Type.GetType("BoxCollider"), System.Type.GetType("CollisionCheck"));
+            Instantiate(spawnCheck, spawnPosition, Quaternion.identity);
+            orbInstance = Instantiate(Orb, spawnPosition, Quaternion.identity) as GameObject;
         }        
 	}
 }

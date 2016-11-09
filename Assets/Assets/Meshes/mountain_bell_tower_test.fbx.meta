@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 01996673da2b6554291e8ea0e0e5d974
-timeCreated: 1477525971
+guid: 95000ca47b1de2d48992b70b991b7bb3
+timeCreated: 1478644186
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: collum_1
+    4300000: pendulum
     9500000: //RootNode
   materials:
     importMaterials: 1
