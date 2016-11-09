@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public static List<int> playerIDS = new List<int>();
     public static List<GameObject> players = new List<GameObject>();
     public GameObject defaultLight;
+    public GameObject playerHUD;
 
     void Start() {
         for (int i = 0; i < players.Count; i++) {
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour {
                 if (i < playerIDS.Count) {
                     players[i].GetComponent<Player>().inputID = playerIDS[i];
                 }
+                players[i].GetComponent<Player>().HUD = Instantiate(playerHUD, new Vector3(0, 2, 5 * i), Quaternion.identity) as GameObject;
                 Instantiate(players[i], new Vector3(0, 1, 5 * i), Quaternion.identity);
             }
         }

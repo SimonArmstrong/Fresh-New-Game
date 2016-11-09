@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour {
     public float scaleDashCollision;
     public float wallPlaceDistance;
     public Controller controls;
+    public GameObject HUD;
 
     public int score;
     public int currentHeld;
@@ -116,7 +118,7 @@ public class Player : MonoBehaviour {
         joystickName = "joystick " + (inputID + 1);
         AnimationManager.OnBeginIdle(gameObject);
 
-        cam.GetComponent<MouseAimCamera>().target = gameObject;
+        cam.GetComponent<CamFollow>().target = gameObject;
         Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
         Debug.Log(GameManager.players.Count + " Players");
 
@@ -146,6 +148,8 @@ public class Player : MonoBehaviour {
         controls.block = "Block" + inputID;
         controls.dash  = "Dash" + inputID;
         //stunTimer = stunTime;
+        HUD.GetComponent<Canvas>().worldCamera = Camera.allCameras[id];
+        Camera.allCameras[id].GetComponent<CamFollow>().scoreText = HUD.GetComponentsInChildren<Text>()[1];
     }
 
     public void Dash() {
@@ -268,5 +272,6 @@ public class Player : MonoBehaviour {
         {
             hasOrbSprite.SetActive(false);
         }
+        Camera.allCameras[id].GetComponent<CamFollow>().scoreText.text = score.ToString();
     }
 }

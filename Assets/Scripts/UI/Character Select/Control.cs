@@ -121,6 +121,7 @@ public class Control : MonoBehaviour {
                 SceneManager.LoadScene(1);
                     
                 for(int j = 0; j < controllerCount; j++) {
+                    // GameManager.players.Add(playerSelectImages[i].selectedCharacter);
                     GameManager.players.Add(defaultPlayer);
                     //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
                     //GameManager.players[i].GetComponent<Player>().controls.dash
