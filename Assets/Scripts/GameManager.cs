@@ -23,4 +23,13 @@ public class GameManager : MonoBehaviour {
         }
         //Instantiate(defaultLight, Vector3.zero, Quaternion.LookRotation(new Vector3(45, -50, 45)));
     }
+
+    public static void GameOver()
+    {
+        //win if player has highest score
+
+        //lose if player doesn't have highest score
+
+        //eliminate if player has lowest score
+    }
 }
