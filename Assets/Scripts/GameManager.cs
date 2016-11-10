@@ -19,9 +19,9 @@ public class GameManager : MonoBehaviour {
                 if (i < playerIDS.Count) {
                     players[i].GetComponent<Player>().inputID = playerIDS[i];
                 }
-                players[i].GetComponent<Player>().HUD = Instantiate(playerHUD, new Vector3(0, 2, 5 * i), Quaternion.identity) as GameObject;
+                players[i].GetComponent<Player>().HUD = Instantiate(playerHUD, new Vector3(0, 0, 5 * i), Quaternion.identity) as GameObject;
                
-                players[i] = Instantiate(players[i], new Vector3(0, 1, 5 * i), Quaternion.identity) as GameObject;
+                players[i] = Instantiate(players[i], new Vector3(0, 0, 5 * i), Quaternion.identity) as GameObject;
             }
         }
         //Instantiate(defaultLight, Vector3.zero, Quaternion.LookRotation(new Vector3(45, -50, 45)));

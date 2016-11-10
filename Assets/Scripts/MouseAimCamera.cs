@@ -6,8 +6,9 @@ public class MouseAimCamera : MonoBehaviour {
 	public GameObject target;
     public Text scoreText;
 	public float rotateSpeed = 5;
-	Vector3 offset;
-	
+	public Vector3 offset;
+	public float height = 1;
+
 	void Start() {
 		offset = target.transform.position - transform.position;
 	}
@@ -19,8 +20,9 @@ public class MouseAimCamera : MonoBehaviour {
 		float desiredAngle = target.transform.eulerAngles.y;
 		Quaternion rotation = Quaternion.Euler(0, desiredAngle, 0);
 		transform.position = target.transform.position - (rotation * offset);
-		
-		transform.LookAt(target.transform);
+        Vector3 targetLookAt = new Vector3(0, height, 0);
+
+        transform.LookAt(targetLookAt + target.transform.position);
 
         //scoreText.text = target.GetComponent<Player>().score.ToString();
 	}
