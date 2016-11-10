@@ -261,6 +261,6 @@ public class Player : MonoBehaviour {
         if(heldOrb != null) {
             heldOrb.transform.position = hand.position;
         }
-       Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
+        Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
     }
 }
