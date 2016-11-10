@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
     public static List<GameObject> players = new List<GameObject>();
     public GameObject defaultLight;
     public GameObject playerHUD;
+    public float timeLeft = 300;
 
     void Start() {
         for (int i = 0; i < players.Count; i++) {
@@ -22,5 +23,33 @@ public class GameManager : MonoBehaviour {
             }
         }
         //Instantiate(defaultLight, Vector3.zero, Quaternion.LookRotation(new Vector3(45, -50, 45)));
+    }
+
+    void Update()
+    {
+        timeLeft -= Time.deltaTime;
+
+        if (timeLeft <= 0)
+        {
+            GameOver();
+        }
+    }
+
+    public void GameOver()
+    {
+        //win if player has highest score
+        int tempHighScore = 0;
+        for (int i = 0; i < players.Count; i++)
+        {
+            if(tempHighScore < players[i].GetComponent<Player>().score)
+            {
+                //tempHighScore is now the highest score
+                tempHighScore = players[i].GetComponent<Player>().score;
+            }
+        }
+        
+        //lose if player doesn't have highest score
+
+        //eliminate if player has lowest score
     }
 }
