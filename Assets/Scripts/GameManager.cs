@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
     public GameObject defaultLight;
     public GameObject playerHUD;
     public float timeLeft = 300;
+    private int tempHighScore = 0;
 
     void Start() {
         for (int i = 0; i < players.Count; i++) {
@@ -19,7 +20,8 @@ public class GameManager : MonoBehaviour {
                     players[i].GetComponent<Player>().inputID = playerIDS[i];
                 }
                 players[i].GetComponent<Player>().HUD = Instantiate(playerHUD, new Vector3(0, 2, 5 * i), Quaternion.identity) as GameObject;
-                Instantiate(players[i], new Vector3(0, 1, 5 * i), Quaternion.identity);
+                players.RemoveAt(i);
+                players.Add(Instantiate(players[i], new Vector3(0, 1, 5 * i), Quaternion.identity) as GameObject);
             }
         }
         //Instantiate(defaultLight, Vector3.zero, Quaternion.LookRotation(new Vector3(45, -50, 45)));
@@ -37,19 +39,19 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver()
     {
-        //win if player has highest score
-        int tempHighScore = 0;
-        for (int i = 0; i < players.Count; i++)
-        {
-            if(tempHighScore < players[i].GetComponent<Player>().score)
-            {
+        for (int i = 0; i < players.Count; i++){
+            if(tempHighScore < players[i].GetComponent<Player>().score){
                 //tempHighScore is now the highest score
                 tempHighScore = players[i].GetComponent<Player>().score;
             }
+            if (players[i].GetComponent<Player>().score == tempHighScore) {
+                //player at i wins
+                //Debug.Log(tempHighScore);
+            }
+            else{
+                //other players don't win
+            }
         }
-        
-        //lose if player doesn't have highest score
-
-        //eliminate if player has lowest score
+        Debug.Log(tempHighScore);
     }
 }

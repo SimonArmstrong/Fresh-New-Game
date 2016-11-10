@@ -47,6 +47,7 @@ public class Control : MonoBehaviour {
     }
 
     void Update () {
+        if (controllerCount == 0) controllerCount = 1;
         for (int i = 0; i < 4; i++) {
             if (!playerSelectImages[i].on) {
                 playerSelectImages[i].image.color = filteredColor;
