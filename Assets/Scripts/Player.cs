@@ -76,7 +76,6 @@ public class Player : MonoBehaviour
     public bool dashing;
     public bool stunned;
     public bool holdingOrb;
-    private bool a;
 
     private float moveSpeed;
     private Collider radialDetection;
@@ -102,18 +101,7 @@ public class Player : MonoBehaviour
             moveSpeed = speed;
         }
         //increments a players score when you drop off orbs
-        if (!a)
-        {
-            if (col.tag == "dropZone")
-            {
-                a = true;
-                if (heldOrb != null)
-                {
-                    Destroy(heldOrb);
-                    score++;
-                }
-            }
-        }
+        
     }
 
     private void OnTriggerEnter(Collider col)
@@ -142,6 +130,16 @@ public class Player : MonoBehaviour
                 moveSpeed = 0;
                 Debug.Log("HIT");
                 AnimationManager.OnGetStunned(gameObject);
+            }
+        }
+
+        if (col.tag == "dropZone")
+        {
+            Debug.Log(col.tag);
+            if (heldOrb != null){
+                Destroy(heldOrb);
+                heldOrb = null;
+                score++;
             }
         }
     }

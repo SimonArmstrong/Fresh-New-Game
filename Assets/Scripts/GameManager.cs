@@ -52,6 +52,6 @@ public class GameManager : MonoBehaviour {
                 //other players don't win
             }
         }
-        Debug.Log(tempHighScore);
+        //Debug.Log(tempHighScore);
     }
 }
