@@ -92,6 +92,8 @@ public class Player : MonoBehaviour
     private GameObject heldOrb;
 
     public bool win = false;
+    public GUIStyle guiStyle;
+    public Texture orbSprite;
 
     private void OnTriggerStay(Collider col)
     {
@@ -314,6 +316,14 @@ public class Player : MonoBehaviour
                 blocking = false;
                 AnimationManager.OnEndBlock(gameObject);
             }
+        }
+    }
+
+    void OnGUI() {
+        GUI.DrawTexture(new Rect(0, 10, 100, 60), orbSprite);
+        GUI.Box(new Rect(50, 10, 60, 60), "X " + score.ToString(), GUIStyle.none);
+        if (dashCooldownTimer > 0) {
+            GUI.Box(new Rect(Screen.width - 10, 10, (-dashCooldownTimer * 300 / 100) * 20, 20), "", guiStyle);
         }
     }
 
