@@ -25,19 +25,20 @@ public class Player : MonoBehaviour
         public GameObject lShoulder;
         public GameObject rShoulder;
         public GameObject torso;
-        public GameObject lHand;
-        public GameObject rHand;
+        public GameObject lArm;
+        public GameObject rArm;
         public GameObject lKnee;
         public GameObject rKnee;
     }
     public ArmourSet armour;
+    public Transform hand;
 
     public Transform head;
     public Transform lShoulder;
     public Transform rShoulder;
     public Transform torso;
-    public Transform lHand;
-    public Transform rHand;
+    public Transform lArm;
+    public Transform rArm;
     public Transform lKnee;
     public Transform rKnee;
 
@@ -152,8 +153,8 @@ public class Player : MonoBehaviour
         if (armour.lShoulder != null) (armour.lShoulder = Instantiate(armour.lShoulder, lShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(lShoulder);
         if (armour.rShoulder != null) (armour.rShoulder = Instantiate(armour.rShoulder, rShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(rShoulder);
         if (armour.torso != null) (armour.torso = Instantiate(armour.torso, torso.position, Quaternion.identity) as GameObject).transform.SetParent(torso);
-        if (armour.lHand != null) (armour.lHand = Instantiate(armour.lHand, lHand.position, Quaternion.identity) as GameObject).transform.SetParent(lHand);
-        if (armour.rHand != null) (armour.rHand = Instantiate(armour.rHand, rHand.position, Quaternion.identity) as GameObject).transform.SetParent(rHand);
+        if (armour.lArm != null) (armour.lArm = Instantiate(armour.lArm, lArm.position, Quaternion.identity) as GameObject).transform.SetParent(lArm);
+        if (armour.rArm != null) (armour.rArm = Instantiate(armour.rArm, rArm.position, Quaternion.identity) as GameObject).transform.SetParent(rArm);
         if (armour.lKnee != null) (armour.lKnee = Instantiate(armour.lKnee, lKnee.position, Quaternion.identity) as GameObject).transform.SetParent(lKnee);
         if (armour.rKnee != null) (armour.rKnee = Instantiate(armour.rKnee, rKnee.position, Quaternion.identity) as GameObject).transform.SetParent(rKnee);
 
@@ -164,8 +165,8 @@ public class Player : MonoBehaviour
         //if (armour.lShoulder != null)       {armour.lShoulder.transform.position = lShoulder.position; }
         //if (armour.rShoulder != null)       {armour.rShoulder.transform.position = rShoulder.position; }
         //if (armour.torso != null)           {armour.torso.transform.position     = torso.position;     }
-        //if (armour.lHand != null)           {armour.lHand.transform.position     = lHand.position;     }
-        //if (armour.rHand != null)           {armour.rHand.transform.position     = rHand.position;     }
+        //if (armour.lArm != null)           {armour.lArm.transform.position     = lArm.position;     }
+        //if (armour.rArm != null)           {armour.rArm.transform.position     = rArm.position;     }
         //if (armour.lKnee != null)           {armour.lKnee.transform.position     = lKnee.position;     }
         //if (armour.rKnee != null)           {armour.rKnee.transform.position     = rKnee.position;     }
     }
@@ -220,6 +221,8 @@ public class Player : MonoBehaviour
         //stunTimer = stunTime
         LoadArmour();
         HUD.GetComponent<Canvas>().worldCamera = Camera.allCameras[id];
+        HUD.GetComponent<Canvas>().planeDistance = 10;
+        //HUD.transform.localScale = new Vector2(cam.pixelWidth, cam.pixelHeight); 
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText = HUD.GetComponentsInChildren<Text>()[1];
     }
 
@@ -320,11 +323,11 @@ public class Player : MonoBehaviour
     }
 
     void OnGUI() {
-        GUI.DrawTexture(new Rect(0, 10, 100, 60), orbSprite);
-        GUI.Box(new Rect(50, 10, 60, 60), "X " + score.ToString(), GUIStyle.none);
-        if (dashCooldownTimer > 0) {
-            GUI.Box(new Rect(Screen.width - 10, 10, (-dashCooldownTimer * 300 / 100) * 20, 20), "", guiStyle);
-        }
+        //GUI.DrawTexture(new Rect(0, 10, 100, 60), orbSprite);
+        //GUI.Box(new Rect(50, 10, 60, 60), "X " + score.ToString(), GUIStyle.none);
+        //if (dashCooldownTimer > 0) {
+        //    GUI.Box(new Rect(Screen.width - 10, 10, (-dashCooldownTimer * 300 / 100) * 20, 20), "", guiStyle);
+        //}
     }
 
     // Update is called once per frame
@@ -349,7 +352,7 @@ public class Player : MonoBehaviour
 
         if (heldOrb != null)
         {
-            heldOrb.transform.position = rHand.position;
+            heldOrb.transform.position = hand.position;
         }
         UpdateArmour();
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
