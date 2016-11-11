@@ -147,9 +147,9 @@ public class Player : MonoBehaviour
                 if (heldOrb != null)
                 {
                     col.GetComponent<Player>().heldOrb = heldOrb;
-                    heldOrb = null;
                     if(heldOrb.GetComponent<BoxCollider>() != null)
                         heldOrb.GetComponent<BoxCollider>().enabled = true;
+					heldOrb = null;
                 }
             }
         }
