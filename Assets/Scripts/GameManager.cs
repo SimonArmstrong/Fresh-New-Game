@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     public GameObject defaultLight;
     public GameObject playerHUD;
     public Text timerText;
-    public float timeLeft = 30;
+    public float timeLeft = 60;
     private int tempHighScore = 0;
 
     void Start() {
