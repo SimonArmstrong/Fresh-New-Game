@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
 
     public float stunTime;
     private float stunTimer;
+    public float blockTime;
+    private float blockTimer;
 
     public GameObject targetPointer;
 
@@ -64,13 +66,14 @@ public class Player : MonoBehaviour
     public float wallPlaceDistance;
     public Controller controls;
     public GameObject HUD;
+    public Image dashIcon;
+    public Text dashTmerText;
 
     public int score;
     public int currentHeld;
 
     private float dashCooldownTimer;
     private float dashDistance;
-    private float blockTime;
     private float placementSkin;
 
     public bool blocking;
@@ -92,9 +95,7 @@ public class Player : MonoBehaviour
     public bool dashMode = false;
     private GameObject heldOrb;
 
-    public bool win = false;
-    public GUIStyle guiStyle;
-    public Texture orbSprite;
+    public bool win = false;    
 
     private void OnTriggerStay(Collider col)
     {
@@ -113,6 +114,7 @@ public class Player : MonoBehaviour
         if (col.tag == "pointOrb")
         {
             heldOrb = col.gameObject;
+            col.enabled = false;
         }
         //where the player recieves the effect of the powerup
         if (col.tag == "powerup")
@@ -131,8 +133,11 @@ public class Player : MonoBehaviour
             {
                 stunTimer = stunTime;
                 moveSpeed = 0;
-                Debug.Log("HIT");
                 AnimationManager.OnGetStunned(gameObject);
+                if(heldOrb != null) {
+                    col.GetComponent<Player>().heldOrb = heldOrb;
+                    heldOrb.GetComponent<BoxCollider>().enabled = true;
+                }
             }
         }
 
@@ -149,26 +154,15 @@ public class Player : MonoBehaviour
 
     void LoadArmour()
     {
-        if (armour.head != null) (armour.head = Instantiate(armour.head, head.position, Quaternion.identity) as GameObject).transform.SetParent(head);
-        if (armour.lShoulder != null) (armour.lShoulder = Instantiate(armour.lShoulder, lShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(lShoulder);
-        if (armour.rShoulder != null) (armour.rShoulder = Instantiate(armour.rShoulder, rShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(rShoulder);
-        if (armour.torso != null) (armour.torso = Instantiate(armour.torso, torso.position, Quaternion.identity) as GameObject).transform.SetParent(torso);
-        if (armour.lArm != null) (armour.lArm = Instantiate(armour.lArm, lArm.position, Quaternion.identity) as GameObject).transform.SetParent(lArm);
-        if (armour.rArm != null) (armour.rArm = Instantiate(armour.rArm, rArm.position, Quaternion.identity) as GameObject).transform.SetParent(rArm);
-        if (armour.lKnee != null) (armour.lKnee = Instantiate(armour.lKnee, lKnee.position, Quaternion.identity) as GameObject).transform.SetParent(lKnee);
-        if (armour.rKnee != null) (armour.rKnee = Instantiate(armour.rKnee, rKnee.position, Quaternion.identity) as GameObject).transform.SetParent(rKnee);
+        if (armour.head != null)        (armour.head      = Instantiate(armour.head,      head.position,      Quaternion.identity) as GameObject).transform.SetParent(head);
+        if (armour.lShoulder != null)   (armour.lShoulder = Instantiate(armour.lShoulder, lShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(lShoulder);
+        if (armour.rShoulder != null)   (armour.rShoulder = Instantiate(armour.rShoulder, rShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(rShoulder);
+        if (armour.torso != null)       (armour.torso     = Instantiate(armour.torso,     torso.position,     Quaternion.identity) as GameObject).transform.SetParent(torso);
+        if (armour.lArm != null)        (armour.lArm      = Instantiate(armour.lArm,      lArm.position,      Quaternion.identity) as GameObject).transform.SetParent(lArm);
+        if (armour.rArm != null)        (armour.rArm      = Instantiate(armour.rArm,      rArm.position,      Quaternion.identity) as GameObject).transform.SetParent(rArm);
+        if (armour.lKnee != null)       (armour.lKnee     = Instantiate(armour.lKnee,     lKnee.position,     Quaternion.identity) as GameObject).transform.SetParent(lKnee);
+        if (armour.rKnee != null)       (armour.rKnee     = Instantiate(armour.rKnee,     rKnee.position,     Quaternion.identity) as GameObject).transform.SetParent(rKnee);
 
-    }
-    void UpdateArmour()
-    {
-        //if (armour.head != null)            {armour.head.transform.position      = head.position;      }
-        //if (armour.lShoulder != null)       {armour.lShoulder.transform.position = lShoulder.position; }
-        //if (armour.rShoulder != null)       {armour.rShoulder.transform.position = rShoulder.position; }
-        //if (armour.torso != null)           {armour.torso.transform.position     = torso.position;     }
-        //if (armour.lArm != null)           {armour.lArm.transform.position     = lArm.position;     }
-        //if (armour.rArm != null)           {armour.rArm.transform.position     = rArm.position;     }
-        //if (armour.lKnee != null)           {armour.lKnee.transform.position     = lKnee.position;     }
-        //if (armour.rKnee != null)           {armour.rKnee.transform.position     = rKnee.position;     }
     }
 
     // Use this for initialization
@@ -178,6 +172,7 @@ public class Player : MonoBehaviour
         //if (dashSpeed <= 0) dashSpeed = 10;
         //if (dashDistance <= 0) dashDistance = 5;
         score = 0;
+        blockTimer = blockTime;
         GetComponent<TrailRenderer>().enabled = false;
         dashCollision = GetComponent<BoxCollider>();
         blocking = false;
@@ -224,6 +219,8 @@ public class Player : MonoBehaviour
         HUD.GetComponent<Canvas>().planeDistance = .5f;
         //HUD.transform.localScale = new Vector2(cam.pixelWidth, cam.pixelHeight); 
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText = HUD.GetComponentsInChildren<Text>()[1];
+        dashIcon = HUD.GetComponentsInChildren<Image>()[1];
+        dashTmerText = dashIcon.gameObject.GetComponentsInChildren<Text>()[0];
     }
 
     public void Dash()
@@ -262,7 +259,7 @@ public class Player : MonoBehaviour
                     }
                 }
                 dashing = true;
-                scaleDashCollision = 1.5f;
+                //scaleDashCollision = 1.5f;
             }
             stunTimer = 0;
 
@@ -298,17 +295,18 @@ public class Player : MonoBehaviour
     public void Block()
     {
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown(controls.block))
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown(controls.block) && blockTimer >= 1.5f)
         {
             blocking = true;
             AnimationManager.OnBeginBlock(gameObject);
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton(controls.block))
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton(controls.block) && blockTimer > 0 && blocking == true)
         {
             moveSpeed = 0;
+            blockTimer -= Time.deltaTime;
             shield.SetActive(true);
-            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(2, 2, 2), Time.deltaTime * shieldGrowSpeed);
+            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(.5f, .5f, .5f) * blockTimer, Time.deltaTime * shieldGrowSpeed);
         }
         else
         {
@@ -319,6 +317,8 @@ public class Player : MonoBehaviour
                 blocking = false;
                 AnimationManager.OnEndBlock(gameObject);
             }
+
+            if (blockTimer < blockTime) blockTimer += Time.deltaTime;
         }
     }
 
@@ -350,11 +350,31 @@ public class Player : MonoBehaviour
         //returns true if your score is greater than 0
         holdingOrb = currentHeld > 0;
 
+        if(dashCooldownTimer > 0) {
+            dashIcon.color = new Color(1, 1, 1, .3f);
+            //dashTmerText.enabled = true;
+            dashTmerText.text = ((int)dashCooldownTimer + 1).ToString();
+        }
+        else {
+            dashIcon.color = new Color(1, 1, 1, 1);
+            //dashTmerText.enabled = false;
+            dashTmerText.text = "";
+        }
+
         if (heldOrb != null)
         {
             heldOrb.transform.position = hand.position;
         }
-        UpdateArmour();
+        else
+        {
+            if (GameObject.FindWithTag("pointOrb") != null)
+            {
+                Transform orb = GameObject.FindWithTag("pointOrb").transform;
+                Vector3 lookAtTarget = new Vector3(orb.position.x, 0 + targetPointer.transform.position.y, orb.position.z);
+                targetPointer.transform.LookAt(lookAtTarget);
+            }
+        }
+        
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
     }
 }

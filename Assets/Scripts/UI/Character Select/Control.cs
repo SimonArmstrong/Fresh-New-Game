@@ -71,14 +71,14 @@ public class Control : MonoBehaviour {
                     }
                     if (swapToCharacterSelect)
                     {
-                        if (Input.GetButtonDown("Cancel" + i))
+                        if (Input.GetButtonDown("Cancel" + playerCount))
                         {
                             playerSelectImages[i].on = false;
                             playerCount--;
 
                         }
 
-                        if (Input.GetButtonDown("Submit" + i))
+                        if (Input.GetButtonDown("Submit" + playerCount))
                         {
                             playerSelectImages[i].on = true;
                             playerCount++;
