@@ -35,10 +35,12 @@ public class GameManager : MonoBehaviour {
     void Update()
     {
         timeLeft -= Time.deltaTime * GameManager.gameSpeed;
-        timerText.text = ((int)timeLeft).ToString();
-        if (timeLeft <= 0)
+        timerText.text = ((int)timeLeft + 1).ToString();
+        if (timeLeft < 0)
         {
+            timerText.text = 0.ToString();
             GameOver();
+            gameSpeed = 0;
         }
     }
 
@@ -46,17 +48,13 @@ public class GameManager : MonoBehaviour {
     {
         for (int i = 0; i < players.Count; i++){
             if(tempHighScore < players[i].GetComponent<Player>().score){
-                //tempHighScore is now the highest score
                 tempHighScore = players[i].GetComponent<Player>().score;
             }
             if (players[i].GetComponent<Player>().score == tempHighScore) {
-                //player at i wins
-                //Debug.Log(tempHighScore);
+                Debug.Log("Player " + (i+1) + " wins!");
             }
             else{
-                //other players don't win
             }
         }
-        //Debug.Log(tempHighScore);
     }
 }
