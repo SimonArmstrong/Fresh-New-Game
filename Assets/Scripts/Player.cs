@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
     public bool dashMode = false;
     private GameObject heldOrb;
 
-    public bool win = false;    
+    public bool win = false;
 
     private void OnTriggerStay(Collider col)
     {
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
             moveSpeed = speed;
         }
         //increments a players score when you drop off orbs
-        
+
     }
 
     private void OnTriggerEnter(Collider col)
@@ -134,16 +134,20 @@ public class Player : MonoBehaviour
                 stunTimer = stunTime;
                 moveSpeed = 0;
                 AnimationManager.OnGetStunned(gameObject);
-                if(heldOrb != null) {
+                if (heldOrb != null)
+                {
                     col.GetComponent<Player>().heldOrb = heldOrb;
-                    heldOrb.GetComponent<BoxCollider>().enabled = true;
+                    heldOrb = null;
+                    if(heldOrb.GetComponent<BoxCollider>() != null)
+                        heldOrb.GetComponent<BoxCollider>().enabled = true;
                 }
             }
         }
 
         if (col.tag == "dropZone")
-        {            
-            if (heldOrb != null){
+        {
+            if (heldOrb != null)
+            {
                 Destroy(heldOrb);
                 heldOrb = null;
                 score++;
@@ -153,14 +157,14 @@ public class Player : MonoBehaviour
 
     void LoadArmour()
     {
-        if (armour.head != null)        (armour.head      = Instantiate(armour.head,      head.position,      Quaternion.identity) as GameObject).transform.SetParent(head);
-        if (armour.lShoulder != null)   (armour.lShoulder = Instantiate(armour.lShoulder, lShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(lShoulder);
-        if (armour.rShoulder != null)   (armour.rShoulder = Instantiate(armour.rShoulder, rShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(rShoulder);
-        if (armour.torso != null)       (armour.torso     = Instantiate(armour.torso,     torso.position,     Quaternion.identity) as GameObject).transform.SetParent(torso);
-        if (armour.lArm != null)        (armour.lArm      = Instantiate(armour.lArm,      lArm.position,      Quaternion.identity) as GameObject).transform.SetParent(lArm);
-        if (armour.rArm != null)        (armour.rArm      = Instantiate(armour.rArm,      rArm.position,      Quaternion.identity) as GameObject).transform.SetParent(rArm);
-        if (armour.lKnee != null)       (armour.lKnee     = Instantiate(armour.lKnee,     lKnee.position,     Quaternion.identity) as GameObject).transform.SetParent(lKnee);
-        if (armour.rKnee != null)       (armour.rKnee     = Instantiate(armour.rKnee,     rKnee.position,     Quaternion.identity) as GameObject).transform.SetParent(rKnee);
+        if (armour.head != null) (armour.head = Instantiate(armour.head, head.position, Quaternion.identity) as GameObject).transform.SetParent(head);
+        if (armour.lShoulder != null) (armour.lShoulder = Instantiate(armour.lShoulder, lShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(lShoulder);
+        if (armour.rShoulder != null) (armour.rShoulder = Instantiate(armour.rShoulder, rShoulder.position, Quaternion.identity) as GameObject).transform.SetParent(rShoulder);
+        if (armour.torso != null) (armour.torso = Instantiate(armour.torso, torso.position, Quaternion.identity) as GameObject).transform.SetParent(torso);
+        if (armour.lArm != null) (armour.lArm = Instantiate(armour.lArm, lArm.position, Quaternion.identity) as GameObject).transform.SetParent(lArm);
+        if (armour.rArm != null) (armour.rArm = Instantiate(armour.rArm, rArm.position, Quaternion.identity) as GameObject).transform.SetParent(rArm);
+        if (armour.lKnee != null) (armour.lKnee = Instantiate(armour.lKnee, lKnee.position, Quaternion.identity) as GameObject).transform.SetParent(lKnee);
+        if (armour.rKnee != null) (armour.rKnee = Instantiate(armour.rKnee, rKnee.position, Quaternion.identity) as GameObject).transform.SetParent(rKnee);
 
     }
 
@@ -222,7 +226,7 @@ public class Player : MonoBehaviour
 
     public void Dash()
     {
-        dashCooldownTimer -= Time.deltaTime;
+        dashCooldownTimer -= Time.deltaTime * GameManager.gameSpeed;
         if (stunTimer <= 0)
         {
             if (Input.GetButtonDown(controls.dash) && dashCooldownTimer <= 0 && !nearWall || Input.GetButtonDown(controls.dash) && dashCooldownTimer <= 0 && !nearWall)
@@ -237,10 +241,10 @@ public class Player : MonoBehaviour
 
             if (dashDistance > 0)
             {
-                dashDistance -= Time.deltaTime;
+                dashDistance -= Time.deltaTime * GameManager.gameSpeed;
                 if (dashMode)
                 {
-                    placementSkin -= Time.deltaTime;
+                    placementSkin -= Time.deltaTime * GameManager.gameSpeed;
                     // Place walls behind player
                     if (placementSkin <= 0)
                     {
@@ -275,7 +279,7 @@ public class Player : MonoBehaviour
     {
         if (stunTimer <= 0)
         {
-            Vector3 axisMovement = new Vector3(Input.GetAxis(controls.moveX), 0, Input.GetAxis(controls.moveY)).normalized * moveSpeed * Time.deltaTime;
+            Vector3 axisMovement = new Vector3(Input.GetAxis(controls.moveX), 0, Input.GetAxis(controls.moveY)).normalized * moveSpeed * Time.deltaTime * GameManager.gameSpeed;
             axisMovement = Camera.allCameras[id].transform.TransformDirection(axisMovement);
 
             transform.position += new Vector3(axisMovement.x, 0, axisMovement.z);
@@ -301,25 +305,26 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton(controls.block) && blockTimer > 0 && blocking == true)
         {
             moveSpeed = 0;
-            blockTimer -= Time.deltaTime;
+            blockTimer -= Time.deltaTime * GameManager.gameSpeed;
             shield.SetActive(true);
-            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(.5f, .5f, .5f) * blockTimer, Time.deltaTime * shieldGrowSpeed);
+            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(.5f, .5f, .5f) * blockTimer, Time.deltaTime * GameManager.gameSpeed * shieldGrowSpeed);
         }
         else
         {
-            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(0, 0, 0), Time.deltaTime * shieldGrowSpeed);
+            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(0, 0, 0), Time.deltaTime * GameManager.gameSpeed * shieldGrowSpeed);
+
             if (shield.transform.localScale.x <= .2f)
             {
                 shield.SetActive(false);
                 blocking = false;
                 AnimationManager.OnEndBlock(gameObject);
             }
-
-            if (blockTimer < blockTime) blockTimer += Time.deltaTime;
+            if (blockTimer < blockTime) blockTimer += Time.deltaTime * GameManager.gameSpeed;
         }
     }
 
-    void OnGUI() {
+    void OnGUI()
+    {
         //GUI.DrawTexture(new Rect(0, 10, 100, 60), orbSprite);
         //GUI.Box(new Rect(50, 10, 60, 60), "X " + score.ToString(), GUIStyle.none);
         //if (dashCooldownTimer > 0) {
@@ -331,7 +336,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         dashCollision.size = new Vector3(2.51f, 0.97f, 1.3f) * scaleDashCollision;
-        stunTimer -= Time.deltaTime;
+        stunTimer -= Time.deltaTime * GameManager.gameSpeed;
         if (stunTimer > 0 && !blocking) moveSpeed = speed;
 
         Dash();
@@ -347,12 +352,14 @@ public class Player : MonoBehaviour
         //returns true if your score is greater than 0
         holdingOrb = currentHeld > 0;
 
-        if(dashCooldownTimer > 0) {
+        if (dashCooldownTimer > 0)
+        {
             dashIcon.color = new Color(1, 1, 1, .3f);
             //dashTmerText.enabled = true;
             dashTmerText.text = ((int)dashCooldownTimer + 1).ToString();
         }
-        else {
+        else
+        {
             dashIcon.color = new Color(1, 1, 1, 1);
             //dashTmerText.enabled = false;
             dashTmerText.text = "";
@@ -371,7 +378,16 @@ public class Player : MonoBehaviour
                 targetPointer.transform.LookAt(lookAtTarget);
             }
         }
-        
+
+        if (Input.GetButtonDown("Pause") && GameManager.gameSpeed == 1)
+        {
+            GameManager.gameSpeed = 0;
+        }
+        else if (Input.GetButtonDown("Pause") && GameManager.gameSpeed == 0)
+        {
+            GameManager.gameSpeed = 1;
+        }
+        mesh.GetComponent<Animator>().SetFloat("gameSpeed", GameManager.gameSpeed);
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
     }
 }

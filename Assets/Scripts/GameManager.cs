@@ -5,13 +5,14 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
     public static int PLAYER_COUNT;
+    public static int gameSpeed = 1;
     public static int currentSpawned;
     public static List<int> playerIDS = new List<int>();
     public static List<GameObject> players = new List<GameObject>();
     public GameObject defaultLight;
     public GameObject playerHUD;
     public Text timerText;
-    public float timeLeft = 30;
+    public float timeLeft = 60;
     private int tempHighScore = 0;
 
     void Start() {
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        timeLeft -= Time.deltaTime;
+        timeLeft -= Time.deltaTime * GameManager.gameSpeed;
         timerText.text = ((int)timeLeft).ToString();
         if (timeLeft <= 0)
         {

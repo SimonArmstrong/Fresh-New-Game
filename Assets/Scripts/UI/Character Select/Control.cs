@@ -71,14 +71,13 @@ public class Control : MonoBehaviour {
                     }
                     if (swapToCharacterSelect)
                     {
-                        if (Input.GetButtonDown("Cancel" + playerCount))
+                        if (Input.GetButtonDown("Cancel" + i) && playerSelectImages[i].on == true)
                         {
                             playerSelectImages[i].on = false;
                             playerCount--;
-
                         }
 
-                        if (Input.GetButtonDown("Submit" + playerCount))
+                        if (Input.GetButtonDown("Submit" + i) && playerSelectImages[i].on == false)
                         {
                             playerSelectImages[i].on = true;
                             playerCount++;
@@ -86,13 +85,13 @@ public class Control : MonoBehaviour {
                     }
                 }
             }
-            if (Input.GetButtonDown("Pause" + 0))
+            if (Input.GetButtonDown("Pause" + 0) && swapToCharacterSelect && playerCount > 0)
             {
+                GameManager.playerIDS.Clear();
                 for (int j = 0; j < 4; j++)
                 {
                     if (playerSelectImages[j].on)
                     {
-                        GameManager.playerIDS.Clear();
                         GameManager.playerIDS.Add(playerSelectImages[j].num);
                     }
                     //defaultPlayer.GetComponent<Player>().id = playerNum[j];
