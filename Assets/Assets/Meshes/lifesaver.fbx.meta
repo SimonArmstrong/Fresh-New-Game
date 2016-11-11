@@ -1,17 +1,15 @@
 fileFormatVersion: 2
-guid: 12c824f7d4781994fb37f911b16b6fac
+guid: 24b48daf9eacdda4bbb2383aaa1474b2
 timeCreated: 1478819663
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: polySurface10
     400000: //RootNode
-    400002: polySurface10
-    2300000: polySurface10
-    3300000: polySurface10
-    4300000: polySurface10
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: pTorus1
     9500000: //RootNode
   materials:
     importMaterials: 1
