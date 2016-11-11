@@ -107,7 +107,15 @@ public class Player : MonoBehaviour
             moveSpeed = speed;
         }
         //increments a players score when you drop off orbs
-
+        if (col.tag == "dropZone")
+        {
+            if (heldOrb != null)
+            {
+                Destroy(heldOrb);
+                heldOrb = null;
+                score++;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider col)
@@ -146,15 +154,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (col.tag == "dropZone")
-        {
-            if (heldOrb != null)
-            {
-                Destroy(heldOrb);
-                heldOrb = null;
-                score++;
-            }
-        }
+        
     }
 
     void LoadArmour()
