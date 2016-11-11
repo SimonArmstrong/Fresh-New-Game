@@ -135,8 +135,9 @@ public class Player : MonoBehaviour
                 moveSpeed = 0;
                 AnimationManager.OnGetStunned(gameObject);
                 if(heldOrb != null) {
+                    heldOrb = null;
                     col.GetComponent<Player>().heldOrb = heldOrb;
-                    heldOrb.GetComponent<BoxCollider>().enabled = true;
+                    //heldOrb.GetComponent<BoxCollider>().enabled = true;
                 }
             }
         }
@@ -209,7 +210,7 @@ public class Player : MonoBehaviour
         controls.moveX = "Horizontal" + inputID;
         controls.moveY = "Vertical" + inputID;
         controls.block = "Block" + inputID;
-        controls.dash = "Dash" + inputID;
+        controls.dash  = "Dash" + inputID;
         //stunTimer = stunTime
         LoadArmour();
         HUD.GetComponent<Canvas>().worldCamera = Camera.allCameras[id];
@@ -222,7 +223,7 @@ public class Player : MonoBehaviour
 
     public void Dash()
     {
-        dashCooldownTimer -= Time.deltaTime;
+        dashCooldownTimer -= Time.deltaTime * GameManager.gameSpeed;
         if (stunTimer <= 0)
         {
             if (Input.GetButtonDown(controls.dash) && dashCooldownTimer <= 0 && !nearWall || Input.GetButtonDown(controls.dash) && dashCooldownTimer <= 0 && !nearWall)
@@ -237,10 +238,10 @@ public class Player : MonoBehaviour
 
             if (dashDistance > 0)
             {
-                dashDistance -= Time.deltaTime;
+                dashDistance -= Time.deltaTime * GameManager.gameSpeed;
                 if (dashMode)
                 {
-                    placementSkin -= Time.deltaTime;
+                    placementSkin -= Time.deltaTime * GameManager.gameSpeed;
                     // Place walls behind player
                     if (placementSkin <= 0)
                     {
@@ -275,7 +276,7 @@ public class Player : MonoBehaviour
     {
         if (stunTimer <= 0)
         {
-            Vector3 axisMovement = new Vector3(Input.GetAxis(controls.moveX), 0, Input.GetAxis(controls.moveY)).normalized * moveSpeed * Time.deltaTime;
+            Vector3 axisMovement = new Vector3(Input.GetAxis(controls.moveX), 0, Input.GetAxis(controls.moveY)).normalized * moveSpeed * Time.deltaTime * GameManager.gameSpeed;
             axisMovement = Camera.allCameras[id].transform.TransformDirection(axisMovement);
 
             transform.position += new Vector3(axisMovement.x, 0, axisMovement.z);
@@ -301,21 +302,21 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetButton(controls.block) && blockTimer > 0 && blocking == true)
         {
             moveSpeed = 0;
-            blockTimer -= Time.deltaTime;
+            blockTimer -= Time.deltaTime * GameManager.gameSpeed;
             shield.SetActive(true);
-            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(.5f, .5f, .5f) * blockTimer, Time.deltaTime * shieldGrowSpeed);
+            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(.5f, .5f, .5f) * blockTimer, Time.deltaTime * GameManager.gameSpeed * shieldGrowSpeed);
         }
         else
         {
-            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(0, 0, 0), Time.deltaTime * shieldGrowSpeed);
+            shield.transform.localScale = Vector3.Lerp(shield.transform.localScale, new Vector3(0, 0, 0), Time.deltaTime * GameManager.gameSpeed * shieldGrowSpeed);
+
             if (shield.transform.localScale.x <= .2f)
             {
                 shield.SetActive(false);
                 blocking = false;
                 AnimationManager.OnEndBlock(gameObject);
             }
-
-            if (blockTimer < blockTime) blockTimer += Time.deltaTime;
+            if (blockTimer < blockTime) blockTimer += Time.deltaTime * GameManager.gameSpeed;
         }
     }
 
@@ -331,7 +332,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         dashCollision.size = new Vector3(2.51f, 0.97f, 1.3f) * scaleDashCollision;
-        stunTimer -= Time.deltaTime;
+        stunTimer -= Time.deltaTime * GameManager.gameSpeed;
         if (stunTimer > 0 && !blocking) moveSpeed = speed;
 
         Dash();
@@ -371,7 +372,14 @@ public class Player : MonoBehaviour
                 targetPointer.transform.LookAt(lookAtTarget);
             }
         }
-        
+
+        if (Input.GetButtonDown("Pause") && GameManager.gameSpeed == 1) {
+            GameManager.gameSpeed = 0;
+        }
+        else if (Input.GetButtonDown("Pause") && GameManager.gameSpeed == 0) {
+            GameManager.gameSpeed = 1;
+        }
+        mesh.GetComponent<Animator>().SetFloat("gameSpeed", GameManager.gameSpeed);
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
     }
 }
