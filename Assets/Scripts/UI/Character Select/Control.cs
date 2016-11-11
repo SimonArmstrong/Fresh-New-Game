@@ -17,7 +17,7 @@ public class Control : MonoBehaviour {
     public GameObject characterSelectScreen;
     public GameObject mainMenuScreen;
     public GameObject readyScreen;
-    public GameObject defaultPlayer;
+    public List<GameObject> defaultPlayer = new List<GameObject>();
     public GameObject defaultLight;
     public int playerCount = 0;
 
@@ -100,7 +100,7 @@ public class Control : MonoBehaviour {
                 }
                 GameManager.players.Clear();
                 for (int j = 0; j < playerCount; j++)
-                    GameManager.players.Add(defaultPlayer);
+                    GameManager.players.Add(defaultPlayer[j]);
 
                 SceneManager.LoadScene(1);
             }
@@ -122,7 +122,7 @@ public class Control : MonoBehaviour {
                     
                 for(int j = 0; j < controllerCount; j++) {
                     // GameManager.players.Add(playerSelectImages[i].selectedCharacter);
-                    GameManager.players.Add(defaultPlayer);
+                    GameManager.players.Add(defaultPlayer[j]);
                     //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
                     //GameManager.players[i].GetComponent<Player>().controls.dash
                 }
