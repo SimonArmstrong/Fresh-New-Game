@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: b93bec8e98adf1043aac5e97b78559be
-timeCreated: 1478827116
+guid: 36c98b3650d5ec64a84148a3c166654e
+timeCreated: 1478824217
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -35,13 +35,13 @@ ModelImporter:
     3300008: M_Greave_R_Arm
     3300010: M_Pauldron_L_Arm
     3300012: M_Pauldron_R_Arm
-    4300000: M_Gauntlet_L_Arm
+    4300000: M_Pauldron_R_Arm
     4300002: M_Pauldron_L_Arm
-    4300004: M_Pauldron_R_Arm
+    4300004: M_Gauntlet_L_Arm
     4300006: M_Chest_Arm
     4300008: M_Gauntlet_R_Arm
-    4300010: M_Greave_L_Arm
-    4300012: M_Greave_R_Arm
+    4300010: M_Greave_R_Arm
+    4300012: M_Greave_L_Arm
   materials:
     importMaterials: 1
     materialName: 0
