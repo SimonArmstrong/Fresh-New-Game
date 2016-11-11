@@ -68,6 +68,8 @@ public class Player : MonoBehaviour
     public GameObject HUD;
     public Image dashIcon;
     public Text dashTmerText;
+    public Image winImage;
+    public Image loseImage;
 
     public int score;
     public int currentHeld;
@@ -220,6 +222,8 @@ public class Player : MonoBehaviour
         HUD.GetComponent<Canvas>().planeDistance = .5f;
         //HUD.transform.localScale = new Vector2(cam.pixelWidth, cam.pixelHeight); 
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText = HUD.GetComponentsInChildren<Text>()[1];
+        winImage = HUD.GetComponentsInChildren<Image>()[2];
+        loseImage = HUD.GetComponentsInChildren<Image>()[3];
         dashIcon = HUD.GetComponentsInChildren<Image>()[1];
         dashTmerText = dashIcon.gameObject.GetComponentsInChildren<Text>()[0];
     }
@@ -379,14 +383,17 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Pause") && GameManager.gameSpeed == 1)
-        {
-            GameManager.gameSpeed = 0;
+        if(GameManager.timeLeft <= 0) {
+            if (win) {
+                winImage.enabled = true;
+                loseImage.enabled = false;
+            }
+            else {
+                winImage.enabled = false;
+                loseImage.enabled = true;
+            }
         }
-        else if (Input.GetButtonDown("Pause") && GameManager.gameSpeed == 0)
-        {
-            GameManager.gameSpeed = 1;
-        }
+
         mesh.GetComponent<Animator>().SetFloat("gameSpeed", GameManager.gameSpeed);
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
     }
