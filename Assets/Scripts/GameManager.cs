@@ -52,8 +52,10 @@ public class GameManager : MonoBehaviour {
             }
             if (players[i].GetComponent<Player>().score == tempHighScore) {
                 Debug.Log("Player " + (i+1) + " wins!");
+                players[i].GetComponent<Player>().win = true;
             }
             else{
+                players[i].GetComponent<Player>().win = false;
             }
         }
     }
