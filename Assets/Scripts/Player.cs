@@ -142,8 +142,7 @@ public class Player : MonoBehaviour
         }
 
         if (col.tag == "dropZone")
-        {
-            Debug.Log(col.tag);
+        {            
             if (heldOrb != null){
                 Destroy(heldOrb);
                 heldOrb = null;
@@ -183,8 +182,6 @@ public class Player : MonoBehaviour
 
         cam.GetComponent<MouseAimCamera>().target = gameObject;
         Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
-
-        Debug.Log(GameManager.players.Count + " Players");
 
         if (GameManager.players.Count == 1)
         {

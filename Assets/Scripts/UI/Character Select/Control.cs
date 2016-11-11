@@ -88,18 +88,18 @@ public class Control : MonoBehaviour {
             }
             if (Input.GetButtonDown("Pause" + 0))
             {
-                Debug.Log("Player Count = " + playerCount);
                 for (int j = 0; j < 4; j++)
                 {
                     if (playerSelectImages[j].on)
                     {
-                        Debug.Log("playerSelectImage[" + j + "] = " + playerSelectImages[j].num);
+                        GameManager.playerIDS.Clear();
                         GameManager.playerIDS.Add(playerSelectImages[j].num);
                     }
                     //defaultPlayer.GetComponent<Player>().id = playerNum[j];
                     //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
                     //GameManager.players[i].GetComponent<Player>().controls.dash
                 }
+                GameManager.players.Clear();
                 for (int j = 0; j < playerCount; j++)
                     GameManager.players.Add(defaultPlayer);
 

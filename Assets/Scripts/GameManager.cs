@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
     private int tempHighScore = 0;
 
     void Start() {
+        PLAYER_COUNT = 0;
+                
         for (int i = 0; i < players.Count; i++) {
             players[i].GetComponent<Player>().id = i;
             if (players[i] != null) {
