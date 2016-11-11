@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,7 +10,8 @@ public class GameManager : MonoBehaviour {
     public static List<GameObject> players = new List<GameObject>();
     public GameObject defaultLight;
     public GameObject playerHUD;
-    public float timeLeft = 300;
+    public Text timerText;
+    public float timeLeft = 30;
     private int tempHighScore = 0;
 
     void Start() {
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour {
     void Update()
     {
         timeLeft -= Time.deltaTime;
-
+        timerText.text = ((int)timeLeft).ToString();
         if (timeLeft <= 0)
         {
             GameOver();

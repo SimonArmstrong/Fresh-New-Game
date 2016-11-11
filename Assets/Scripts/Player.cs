@@ -221,7 +221,7 @@ public class Player : MonoBehaviour
         //stunTimer = stunTime
         LoadArmour();
         HUD.GetComponent<Canvas>().worldCamera = Camera.allCameras[id];
-        HUD.GetComponent<Canvas>().planeDistance = 10;
+        HUD.GetComponent<Canvas>().planeDistance = .5f;
         //HUD.transform.localScale = new Vector2(cam.pixelWidth, cam.pixelHeight); 
         Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText = HUD.GetComponentsInChildren<Text>()[1];
     }
