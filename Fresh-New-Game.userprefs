@@ -1,9 +1,8 @@
 ﻿<Properties StartupItem="Fresh-New-Game.CSharp.Plugins.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UI\Character Select\Control.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Gem\Shaders\Gem.shader">
     <Files>
-      <File FileName="Assets\Scripts\Player.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\UI\Character Select\Control.cs" Line="103" Column="63" />
+      <File FileName="Assets\Gem\Shaders\Gem.shader" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
