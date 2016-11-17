@@ -4,7 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
+    public enum GameMode {
+        TimeAttack,
+        FirstTo,
+        Oddball
+    }
+
     public static int PLAYER_COUNT;
+    public GameMode GAME_MODE = GameMode.TimeAttack;
     public static int gameSpeed = 1;
     public static int currentSpawned;
     public static List<int> playerIDS = new List<int>();
@@ -34,14 +41,20 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        timeLeft -= Time.deltaTime * GameManager.gameSpeed;
-        timerText.text = ((int)timeLeft + 1).ToString();
-        if (timeLeft < 0)
+        if (GAME_MODE == GameMode.TimeAttack)
         {
-            timerText.text = 0.ToString();
-            GameOver();
-            gameSpeed = 0;
+            timeLeft -= Time.deltaTime * GameManager.gameSpeed;
+            timerText.text = ((int)timeLeft + 1).ToString();
+            if (timeLeft < 0)
+            {
+                timerText.text = 0.ToString();
+                GameOver();
+                gameSpeed = 0;
+            }
         }
+        else if (GAME_MODE == GameMode.Oddball) { }
+        else if (GAME_MODE == GameMode.FirstTo) { }
+
     }
 
     public void GameOver()

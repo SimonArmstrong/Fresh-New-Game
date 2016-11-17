@@ -42,8 +42,16 @@ public class Control : MonoBehaviour {
 
     void Start() {
         selectedIndex = 0;
-        controllerCount = Input.GetJoystickNames().GetLength(0);
-        controllerCount = Mathf.Clamp(controllerCount, 0, 4);
+        for (int j = 0; j < 4; j++) {
+            for (int i = 0; i < 4; i++) {
+                if (i < Input.GetJoystickNames().Length && j < Input.GetJoystickNames().Length) {
+                    if (!ReferenceEquals(Input.GetJoystickNames()[i], Input.GetJoystickNames()[j])) {
+                        controllerCount++;
+                    }
+                }
+            }
+        }
+        //controllerCount = Mathf.Clamp(controllerCount, 0, 4);
     }
 
     void Update () {
@@ -64,10 +72,8 @@ public class Control : MonoBehaviour {
             {
                 for (int i = 0; i < controllerCount; i++)
                 {
-                    bool canCycle = true;
-                    if(Input.GetAxis(contextOrientation + i) > 0 && canCycle) {
+                    if(Input.GetAxis(contextOrientation + i) > 0) {
                         selectedIndex++;
-                        canCycle = false;
                     }
                     if (Input.GetButtonDown("Submit" + i))
                     {
