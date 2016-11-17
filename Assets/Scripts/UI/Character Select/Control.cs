@@ -44,9 +44,11 @@ public class Control : MonoBehaviour {
         selectedIndex = 0;
         controllerCount = Input.GetJoystickNames().GetLength(0);
         controllerCount = Mathf.Clamp(controllerCount, 0, 4);
+        controllerCount = 1;
     }
 
     void Update () {
+        highlightSprite.transform.position = menuContext[selectedIndex].transform.position;
         if (controllerCount == 0) controllerCount = 1;
         for (int i = 0; i < 4; i++) {
             if (!playerSelectImages[i].on) {
@@ -64,6 +66,11 @@ public class Control : MonoBehaviour {
             {
                 for (int i = 0; i < controllerCount; i++)
                 {
+                    bool canCycle = true;
+                    if(Input.GetAxis("Horizontal" + i) > 0 && canCycle) {
+                        selectedIndex++;
+                        canCycle = false;
+                    }
                     if (Input.GetButtonDown("Submit" + i))
                     {
                         swapToCharacterSelect = true;
@@ -145,6 +152,7 @@ public class Control : MonoBehaviour {
             selectedIndex = menuContext.Count;
         }
 
+        highlightSprite.transform.position = menuContext[selectedIndex].transform.position;
 
         if (swapToCharacterSelect) {
             characterSelectScreen.transform.position = Vector3.Lerp(characterSelectScreen.transform.position, new Vector3(0, 0, 100), Time.deltaTime * 10);
