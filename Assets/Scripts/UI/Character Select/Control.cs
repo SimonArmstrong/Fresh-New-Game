@@ -51,7 +51,7 @@ public class Control : MonoBehaviour {
                 }
             }
         }
-        //controllerCount = Mathf.Clamp(controllerCount, 0, 4);
+        controllerCount = Mathf.Clamp(controllerCount, 0, 4);
     }
 
     void Update () {

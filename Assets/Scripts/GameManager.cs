@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
     public Text timerText;
     public static float timeLeft = 60;
     private int tempHighScore = 0;
+    public static int scoreToWin;
 
     void Start() {
         PLAYER_COUNT = 0;
@@ -53,7 +54,9 @@ public class GameManager : MonoBehaviour {
             }
         }
         else if (GAME_MODE == GameMode.Oddball) { }
-        else if (GAME_MODE == GameMode.FirstTo) { }
+        else if (GAME_MODE == GameMode.FirstTo) {
+
+        }
 
     }
 
