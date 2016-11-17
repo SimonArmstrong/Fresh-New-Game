@@ -44,11 +44,9 @@ public class Control : MonoBehaviour {
         selectedIndex = 0;
         controllerCount = Input.GetJoystickNames().GetLength(0);
         controllerCount = Mathf.Clamp(controllerCount, 0, 4);
-        controllerCount = 1;
     }
 
     void Update () {
-        highlightSprite.transform.position = menuContext[selectedIndex].transform.position;
         if (controllerCount == 0) controllerCount = 1;
         for (int i = 0; i < 4; i++) {
             if (!playerSelectImages[i].on) {
@@ -67,7 +65,7 @@ public class Control : MonoBehaviour {
                 for (int i = 0; i < controllerCount; i++)
                 {
                     bool canCycle = true;
-                    if(Input.GetAxis("Horizontal" + i) > 0 && canCycle) {
+                    if(Input.GetAxis(contextOrientation + i) > 0 && canCycle) {
                         selectedIndex++;
                         canCycle = false;
                     }
@@ -144,15 +142,13 @@ public class Control : MonoBehaviour {
             readyScreen.SetActive(true);
         }
 
-        if (selectedIndex > menuContext.Count) {
+        if (selectedIndex > menuContext.Count - 1) {
             selectedIndex = 0;
         }
 
         if (selectedIndex < 0) {
             selectedIndex = menuContext.Count;
-        }
-
-        highlightSprite.transform.position = menuContext[selectedIndex].transform.position;
+        }        
 
         if (swapToCharacterSelect) {
             characterSelectScreen.transform.position = Vector3.Lerp(characterSelectScreen.transform.position, new Vector3(0, 0, 100), Time.deltaTime * 10);
@@ -162,7 +158,7 @@ public class Control : MonoBehaviour {
             characterSelectScreen.transform.position = Vector3.Lerp(characterSelectScreen.transform.position, new Vector3(0, 0, 100), Time.deltaTime * 10);
             mainMenuScreen.transform.position = Vector3.Lerp(mainMenuScreen.transform.position, new Vector3(800, 0, 100), Time.deltaTime * 10);
         }
-            
+        highlightSprite.transform.position = menuContext[selectedIndex].transform.position;
     }
 
     IEnumerator Flash(PlayerPanel selectImage) {
