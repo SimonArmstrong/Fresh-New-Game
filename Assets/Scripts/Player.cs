@@ -352,7 +352,7 @@ public class Player : MonoBehaviour
             nearWall = false;
         }
 
-        GameObject hasOrbSprite = gameObject.transform.GetChild(5).gameObject;
+        GameObject hasOrbSprite = gameObject.transform.GetChild(3).gameObject;
         //returns true if your score is greater than 0
         holdingOrb = currentHeld > 0;
 
@@ -372,6 +372,7 @@ public class Player : MonoBehaviour
         if (heldOrb != null)
         {
             heldOrb.transform.position = hand.position;
+            hasOrbSprite.SetActive(true);
         }
         else
         {
