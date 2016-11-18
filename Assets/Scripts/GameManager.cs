@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
     public GameObject defaultLight;
     public GameObject playerHUD;
     public Text timerText;
+    public float gameOverScreenTime = 5;
     public static float timeLeft = 60;
     private int tempHighScore = 0;
     public int scoreToWin = 10;
@@ -59,8 +60,8 @@ public class GameManager : MonoBehaviour {
         else if (GAME_MODE == GameMode.FirstTo) {
             for (int i = 0; i < players.Count; i++) {
                 if (players[i].GetComponent<Player>().score == scoreToWin) {
-                    GameOver();
                     gameSpeed = .2f;
+                    GameOver();
                 }
             }
         }
@@ -80,5 +81,25 @@ public class GameManager : MonoBehaviour {
                 players[i].GetComponent<Player>().win = false;
             }
         }
+        gameOverScreenTime -= Time.deltaTime;
+        if (gameOverScreenTime <= 0)
+        {
+            OnSceneUnload();
+            SceneManager.LoadScene(0);
+            SceneManager.UnloadScene(1);
+        }
+    }
+    void OnSceneUnload()
+    {
+        for (int i = 0; i < players.Count; i++)  players[i].GetComponent<Player>().score = 0;
+        gameEnd = false;
+        gameSpeed = 1;
+        timeLeft = 60;
+        gameOverScreenTime = 5;
+        tempHighScore = 0;
+        timerText = null;
+        playerHUD = null;
+        players.Clear();
+        playerIDS.Clear();
     }
 }
