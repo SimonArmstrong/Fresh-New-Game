@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 
     public static int PLAYER_COUNT;
     public GameMode GAME_MODE = GameMode.FirstTo;
-    public static int gameSpeed = 1;
+    public static float gameSpeed = 1;
     public static int currentSpawned;
     public static List<int> playerIDS = new List<int>();
     public static List<GameObject> players = new List<GameObject>();
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour {
             for (int i = 0; i < players.Count; i++) {
                 if (players[i].GetComponent<Player>().score == scoreToWin) {
                     GameOver();
-                    gameSpeed = 0;
+                    gameSpeed = .2f;
                 }
             }
         }

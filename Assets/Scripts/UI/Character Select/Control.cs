@@ -167,6 +167,8 @@ public class Control : MonoBehaviour {
         highlightSprite.transform.position = menuContext[selectedIndex].transform.position;
     }
 
+
+
     IEnumerator Flash(PlayerPanel selectImage) {
         yield return null;
     }
