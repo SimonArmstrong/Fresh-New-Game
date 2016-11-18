@@ -391,7 +391,8 @@ public class Player : MonoBehaviour
 
         if (heldOrb != null)
         {
-            heldOrb.transform.position = head.position;
+            heldOrb.transform.position = new Vector3(head.position.x, head.position.y + 2, head.position.z);
+            targetPointer.transform.LookAt(new Vector3(0, targetPointer.transform.position.y, 0));
         }
         else
         {

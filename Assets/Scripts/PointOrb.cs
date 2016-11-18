@@ -24,6 +24,6 @@ public class PointOrb : MonoBehaviour {
         else if (GameManager.gameSpeed == 1){
             ps.Play();
         }
-        transform.position = new Vector3(transform.position.x, 1 + Mathf.Sin(rot) / 2, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y /*+ Mathf.Sin(rot) / 2*/, transform.position.z);
     }
 }
