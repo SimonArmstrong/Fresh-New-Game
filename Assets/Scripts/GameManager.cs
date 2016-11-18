@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
     public Text timerText;
     public static float timeLeft = 60;
     private int tempHighScore = 0;
-    public static int scoreToWin = 10;
+    public int scoreToWin = 10;
     public static bool gameEnd = false;
 
     void Start() {
