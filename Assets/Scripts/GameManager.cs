@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour {
         else if (GAME_MODE == GameMode.FirstTo) {
             for (int i = 0; i < players.Count; i++) {
                 if (players[i].GetComponent<Player>().score == scoreToWin) {
-                    gameSpeed = .2f;
+                    gameSpeed = Mathf.Lerp(gameSpeed, .2f, Time.deltaTime * 7);
                     GameOver();
                 }
             }

@@ -152,6 +152,10 @@ public class Player : MonoBehaviour
                     heldOrb = null;
                 }
             }
+            else if(col.gameObject.GetComponent<Player>().inputID != inputID && col.gameObject.GetComponent<Player>().dashing && blocking)
+            {
+                dashDistance = 0;
+            }
         }
 
         
@@ -339,6 +343,22 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (GameManager.gameEnd)
+        {
+            if (win)
+            {
+                winImage.enabled = true;
+                loseImage.enabled = false;
+            }
+            else
+            {
+                winImage.enabled = false;
+                loseImage.enabled = true;
+
+                stunned = true;
+            }
+        }
+
         dashCollision.size = new Vector3(2.51f, 0.97f, 1.3f) * scaleDashCollision;
         stunTimer -= Time.deltaTime * GameManager.gameSpeed;
         if (stunTimer > 0 && !blocking) moveSpeed = speed;
@@ -380,17 +400,6 @@ public class Player : MonoBehaviour
                 Transform orb = GameObject.FindWithTag("pointOrb").transform;
                 Vector3 lookAtTarget = new Vector3(orb.position.x, 0 + targetPointer.transform.position.y, orb.position.z);
                 targetPointer.transform.LookAt(lookAtTarget);
-            }
-        }
-
-        if(GameManager.gameEnd) {
-            if (win) {
-                winImage.enabled = true;
-                loseImage.enabled = false;
-            }
-            else {
-                winImage.enabled = false;
-                loseImage.enabled = true;
             }
         }
 
