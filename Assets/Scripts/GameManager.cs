@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour {
         else if (GAME_MODE == GameMode.FirstTo) {
             for (int i = 0; i < players.Count; i++) {
                 if (players[i].GetComponent<Player>().score == scoreToWin) {
-                    gameSpeed = Mathf.Lerp(gameSpeed, .2f, Time.deltaTime * 7);
+                    gameSpeed = Mathf.Lerp(gameSpeed, .05f, Time.deltaTime * 2);
                     GameOver();
                 }
             }
@@ -91,7 +91,10 @@ public class GameManager : MonoBehaviour {
     }
     void OnSceneUnload()
     {
-        for (int i = 0; i < players.Count; i++)  players[i].GetComponent<Player>().score = 0;
+        for (int i = 0; i < players.Count; i++) {
+            players[i].GetComponent<Player>().score = 0;
+            Destroy(players[i].GetComponent<Player>().cam);
+        }
         gameEnd = false;
         gameSpeed = 1;
         timeLeft = 60;

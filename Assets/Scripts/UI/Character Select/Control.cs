@@ -13,6 +13,7 @@ public class Control : MonoBehaviour {
     public bool keyboard;
 
     public Color filteredColor;
+    public Menu mainMenu = new Menu();
     public List<PlayerPanel> playerSelectImages = new List<PlayerPanel>();
     public GameObject characterSelectScreen;
     public GameObject mainMenuScreen;
@@ -38,6 +39,7 @@ public class Control : MonoBehaviour {
     private bool   isPlaystation            = false;
     private bool   nextPress                = true;
     private bool   canReady                 = false;
+    private bool   cycleReady               = false;
     public string  contextOrientation       = "Vertical";
 
     void Start() {
@@ -52,6 +54,26 @@ public class Control : MonoBehaviour {
             }
         }
         controllerCount = Mathf.Clamp(controllerCount, 0, 4);
+
+        mainMenu.elements.Add(new Menu.Item("Play", menuContext[0].transform));
+        mainMenu.elements.Add(new Menu.Item("Options", menuContext[1].transform));
+        mainMenu.elements.Add(new Menu.Item("Quit", menuContext[2].transform));
+
+        mainMenu.element("Play").execute = Play;
+        mainMenu.element("Options").execute = Options;
+        mainMenu.element("Quit").execute = Quit;
+    }
+
+    void Play() {
+        swapToCharacterSelect = true;
+        swapToMainMenu = false;
+    }
+    void Options() {
+        swapToCharacterSelect = true;
+        swapToMainMenu = false;
+    }
+    void Quit() {
+        Application.Quit();
     }
 
     void Update () {
@@ -70,15 +92,22 @@ public class Control : MonoBehaviour {
         {
             if (!keyboard)
             {
+                if((int)Input.GetAxis(contextOrientation + 0) != 0 && cycleReady) {
+                    selectedIndex -= (int)Input.GetAxis(contextOrientation + 0);
+                    cycleReady = false;
+                }
+                if ((int)Input.GetAxis(contextOrientation + 0) == 0) {
+                    cycleReady = true;
+                }
+                if (Input.GetButtonDown("Cancel" + 0)) {
+                    swapToCharacterSelect = false;
+                    swapToMainMenu = true;
+                }
                 for (int i = 0; i < controllerCount; i++)
                 {
-                    if(Input.GetAxis(contextOrientation + i) > 0) {
-                        selectedIndex++;
-                    }
                     if (Input.GetButtonDown("Submit" + i))
                     {
-                        swapToCharacterSelect = true;
-                        swapToMainMenu = false;
+                        mainMenu.elements[selectedIndex].execute();
                     }
                     if (swapToCharacterSelect)
                     {
@@ -161,8 +190,8 @@ public class Control : MonoBehaviour {
             mainMenuScreen.transform.position = Vector3.Lerp(mainMenuScreen.transform.position, new Vector3(800, 0, 100), Time.deltaTime * 10);
         }
         if (swapToMainMenu) {
-            characterSelectScreen.transform.position = Vector3.Lerp(characterSelectScreen.transform.position, new Vector3(0, 0, 100), Time.deltaTime * 10);
-            mainMenuScreen.transform.position = Vector3.Lerp(mainMenuScreen.transform.position, new Vector3(800, 0, 100), Time.deltaTime * 10);
+            characterSelectScreen.transform.position = Vector3.Lerp(characterSelectScreen.transform.position, new Vector3(800, 0, 100), Time.deltaTime * 10);
+            mainMenuScreen.transform.position = Vector3.Lerp(mainMenuScreen.transform.position, new Vector3(0, 0, 100), Time.deltaTime * 10);
         }
         highlightSprite.transform.position = menuContext[selectedIndex].transform.position;
     }
