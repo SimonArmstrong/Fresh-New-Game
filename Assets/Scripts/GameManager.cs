@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public static int PLAYER_COUNT;
-    public GameMode GAME_MODE = GameMode.TimeAttack;
+    public GameMode GAME_MODE = GameMode.FirstTo;
     public static int gameSpeed = 1;
     public static int currentSpawned;
     public static List<int> playerIDS = new List<int>();
@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour {
     public Text timerText;
     public static float timeLeft = 60;
     private int tempHighScore = 0;
-    public static int scoreToWin;
+    public static int scoreToWin = 10;
+    public static bool gameEnd = false;
 
     void Start() {
         PLAYER_COUNT = 0;
@@ -55,13 +56,18 @@ public class GameManager : MonoBehaviour {
         }
         else if (GAME_MODE == GameMode.Oddball) { }
         else if (GAME_MODE == GameMode.FirstTo) {
-
+            for (int i = 0; i < players.Count; i++) {
+                if (players[i].GetComponent<Player>().score == scoreToWin) {
+                    GameOver();
+                    gameSpeed = 0;
+                }
+            }
         }
-
     }
 
     public void GameOver()
     {
+        gameEnd = true;
         for (int i = 0; i < players.Count; i++){
             if(tempHighScore < players[i].GetComponent<Player>().score){
                 tempHighScore = players[i].GetComponent<Player>().score;

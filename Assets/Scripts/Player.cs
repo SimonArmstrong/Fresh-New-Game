@@ -383,7 +383,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(GameManager.timeLeft <= 0) {
+        if(GameManager.gameEnd) {
             if (win) {
                 winImage.enabled = true;
                 loseImage.enabled = false;
