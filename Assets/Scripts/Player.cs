@@ -192,7 +192,6 @@ public class Player : MonoBehaviour
         AnimationManager.OnBeginIdle(gameObject);
 
         cam.GetComponent<MouseAimCamera>().target = gameObject;
-        Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
 
         if (GameManager.players.Count == 1)
         {
@@ -216,6 +215,8 @@ public class Player : MonoBehaviour
             else if (id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
             else if (id == 3) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
         }
+
+        Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
 
         controls.moveX = "Horizontal" + inputID;
         controls.moveY = "Vertical" + inputID;
