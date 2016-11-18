@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
     public GameObject mesh;
     public BoxCollider dashCollision;
     public Animator animator;
+    public Animator glowAnimator;
     public Transform wallSpawnPosition;
     public List<GameObject> dashWallObject = new List<GameObject>();
     public float shieldGrowSpeed;
@@ -282,6 +283,9 @@ public class Player : MonoBehaviour
             }
             else { AnimationManager.OnDashing(gameObject); }
         }
+
+        
+        
     }
     public void Movement()
     {
@@ -372,7 +376,15 @@ public class Player : MonoBehaviour
             nearWall = false;
         }
 
-        GameObject hasOrbSprite = gameObject.transform.GetChild(3).gameObject;
+        GameObject hasDash = gameObject.transform.GetChild(8).GetChild(1).gameObject;
+
+        if (dashCooldownTimer <= 0){
+            hasDash.GetComponent<SkinnedMeshRenderer>().enabled = true;
+        }
+        else {
+            hasDash.GetComponent<SkinnedMeshRenderer>().enabled = false;
+        }
+
         //returns true if your score is greater than 0
         holdingOrb = currentHeld > 0;
 
