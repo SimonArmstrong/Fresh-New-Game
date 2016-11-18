@@ -371,8 +371,7 @@ public class Player : MonoBehaviour
 
         if (heldOrb != null)
         {
-            heldOrb.transform.position = hand.position;
-            hasOrbSprite.SetActive(true);
+            heldOrb.transform.position = head.position;
         }
         else
         {
