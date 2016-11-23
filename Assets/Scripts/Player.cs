@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
     public bool dashing;
     public bool stunned;
     public bool holdingOrb;
+    public bool screenMode;
 
     private float moveSpeed;
     private Collider radialDetection;
@@ -101,63 +102,68 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay(Collider col)
     {
-        if (col.tag != "Player" && col.tag != "dropZone" && col.tag != "pointOrb")
+        if (!screenMode)
         {
-            nearWall = true;
-            moveSpeed = speed;
-        }
-        //increments a players score when you drop off orbs
-        if (col.tag == "dropZone")
-        {
-            if (heldOrb != null)
+            if (col.tag != "Player" && col.tag != "dropZone" && col.tag != "pointOrb")
             {
-                Destroy(heldOrb);
-                heldOrb = null;
-                score++;
+                nearWall = true;
+                moveSpeed = speed;
+            }
+            //increments a players score when you drop off orbs
+            if (col.tag == "dropZone")
+            {
+                if (heldOrb != null)
+                {
+                    Destroy(heldOrb);
+                    heldOrb = null;
+                    score++;
+                }
             }
         }
     }
 
     private void OnTriggerEnter(Collider col)
     {
-        //when the player picks up the orb
-        if (col.tag == "pointOrb")
+        if (!screenMode)
         {
-            heldOrb = col.gameObject;
-            col.enabled = false;
-        }
-        //where the player recieves the effect of the powerup
-        if (col.tag == "powerup")
-        {
-            Destroy(col.gameObject);
-            //powerupy stuff;
-        }
-        if (col.tag != "Player" && dashing && col.tag != "pointOrb")
-        {
-            collisionParticle.Play();
-        }
-
-        if (col.tag == "Player")
-        {
-            if (col.gameObject.GetComponent<Player>().inputID != inputID && col.gameObject.GetComponent<Player>().dashing && !blocking)
+            //when the player picks up the orb
+            if (col.tag == "pointOrb")
             {
-                stunTimer = stunTime;
-                moveSpeed = 0;
-                AnimationManager.OnGetStunned(gameObject);
-                if (heldOrb != null)
+                heldOrb = col.gameObject;
+                col.enabled = false;
+            }
+            //where the player recieves the effect of the powerup
+            if (col.tag == "powerup")
+            {
+                Destroy(col.gameObject);
+                //powerupy stuff;
+            }
+            if (col.tag != "Player" && dashing && col.tag != "pointOrb")
+            {
+                collisionParticle.Play();
+            }
+
+            if (col.tag == "Player")
+            {
+                if (col.gameObject.GetComponent<Player>().inputID != inputID && col.gameObject.GetComponent<Player>().dashing && !blocking)
                 {
-                    col.GetComponent<Player>().heldOrb = heldOrb;
-                    if(heldOrb.GetComponent<BoxCollider>() != null)
-                        heldOrb.GetComponent<BoxCollider>().enabled = true;
-                    heldOrb = null;
+                    stunTimer = stunTime;
+                    moveSpeed = 0;
+                    AnimationManager.OnGetStunned(gameObject);
+                    if (heldOrb != null)
+                    {
+                        col.GetComponent<Player>().heldOrb = heldOrb;
+                        if (heldOrb.GetComponent<BoxCollider>() != null)
+                            heldOrb.GetComponent<BoxCollider>().enabled = true;
+                        heldOrb = null;
+                    }
+                }
+                else if (col.gameObject.GetComponent<Player>().inputID != inputID && col.gameObject.GetComponent<Player>().dashing && blocking)
+                {
+                    dashDistance = 0;
                 }
             }
-            else if(col.gameObject.GetComponent<Player>().inputID != inputID && col.gameObject.GetComponent<Player>().dashing && blocking)
-            {
-                dashDistance = 0;
-            }
         }
-
         
     }
 
@@ -189,48 +195,49 @@ public class Player : MonoBehaviour
         holdingOrb = false;
         joystickName = "joystick " + (inputID + 1);
         AnimationManager.OnBeginIdle(gameObject);
-
-        cam.GetComponent<MouseAimCamera>().target = gameObject;
-
-        if (GameManager.players.Count == 1)
+        if (!screenMode)
         {
-            if (id == 0) cam.rect = new Rect(0, 0, 1, 1);
-        }
-        else if (GameManager.players.Count == 2)
-        {
-            if (id == 0) cam.rect = new Rect(0, -0.5f, 1, 1);
-            else if (id == 1) cam.rect = new Rect(0, 0.5f, 1, 1);
-        }
-        else if (GameManager.players.Count == 3)
-        {
-            if (id == 0) cam.rect = new Rect(0, 0.5f, 1, 1);
-            else if (id == 1) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
-            else if (id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
-        }
-        else if (GameManager.players.Count == 4)
-        {
-            if (id == 0) cam.rect = new Rect(-.5f, 0.5f, 1, 1);
-            else if (id == 1) cam.rect = new Rect(.5f, .5f, 1, 1);
-            else if (id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
-            else if (id == 3) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
-        }
+            cam.GetComponent<MouseAimCamera>().target = gameObject;
 
-        Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
+            if (GameManager.players.Count == 1)
+            {
+                if (id == 0) cam.rect = new Rect(0, 0, 1, 1);
+            }
+            else if (GameManager.players.Count == 2)
+            {
+                if (id == 0) cam.rect = new Rect(0, -0.5f, 1, 1);
+                else if (id == 1) cam.rect = new Rect(0, 0.5f, 1, 1);
+            }
+            else if (GameManager.players.Count == 3)
+            {
+                if (id == 0) cam.rect = new Rect(0, 0.5f, 1, 1);
+                else if (id == 1) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
+                else if (id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
+            }
+            else if (GameManager.players.Count == 4)
+            {
+                if (id == 0) cam.rect = new Rect(-.5f, 0.5f, 1, 1);
+                else if (id == 1) cam.rect = new Rect(.5f, .5f, 1, 1);
+                else if (id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
+                else if (id == 3) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
+            }
 
-        controls.moveX = "Horizontal" + inputID;
-        controls.moveY = "Vertical" + inputID;
-        controls.block = "Block" + inputID;
-        controls.dash = "Dash" + inputID;
-        //stunTimer = stunTime
+            Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
+            controls.moveX = "Horizontal" + inputID;
+            controls.moveY = "Vertical" + inputID;
+            controls.block = "Block" + inputID;
+            controls.dash = "Dash" + inputID;
+            //stunTimer = stunTime
+            HUD.GetComponent<Canvas>().worldCamera = Camera.allCameras[id];
+            HUD.GetComponent<Canvas>().planeDistance = .5f;
+            //HUD.transform.localScale = new Vector2(cam.pixelWidth, cam.pixelHeight); 
+            Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText = HUD.GetComponentsInChildren<Text>()[1];
+            winImage = HUD.GetComponentsInChildren<Image>()[2];
+            loseImage = HUD.GetComponentsInChildren<Image>()[3];
+            dashIcon = HUD.GetComponentsInChildren<Image>()[1];
+            dashTmerText = dashIcon.gameObject.GetComponentsInChildren<Text>()[0];
+        }
         LoadArmour();
-        HUD.GetComponent<Canvas>().worldCamera = Camera.allCameras[id];
-        HUD.GetComponent<Canvas>().planeDistance = .5f;
-        //HUD.transform.localScale = new Vector2(cam.pixelWidth, cam.pixelHeight); 
-        Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText = HUD.GetComponentsInChildren<Text>()[1];
-        winImage = HUD.GetComponentsInChildren<Image>()[2];
-        loseImage = HUD.GetComponentsInChildren<Image>()[3];
-        dashIcon = HUD.GetComponentsInChildren<Image>()[1];
-        dashTmerText = dashIcon.gameObject.GetComponentsInChildren<Text>()[0];
     }
 
     public void Dash()
@@ -347,67 +354,70 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (GameManager.gameEnd)
+        if (!screenMode)
         {
-            if (win)
+            if (GameManager.gameEnd)
             {
-                winImage.enabled = true;
-                loseImage.enabled = false;
+                if (win)
+                {
+                    winImage.enabled = true;
+                    loseImage.enabled = false;
+                }
+                else
+                {
+                    winImage.enabled = false;
+                    loseImage.enabled = true;
+
+                    stunned = true;
+                }
+            }
+
+            dashCollision.size = new Vector3(2.51f, 0.97f, 1.3f) * scaleDashCollision;
+            stunTimer -= Time.deltaTime * GameManager.gameSpeed;
+            if (stunTimer > 0 && !blocking) moveSpeed = speed;
+
+            Dash();
+            Block();
+            Movement();
+
+            if (nearWall)
+            {
+                nearWall = false;
+            }
+
+            //returns true if your score is greater than 0
+            holdingOrb = currentHeld > 0;
+
+            if (dashCooldownTimer > 0)
+            {
+                dashIcon.color = new Color(1, 1, 1, .3f);
+                //dashTmerText.enabled = true;
+                dashTmerText.text = ((int)dashCooldownTimer + 1).ToString();
             }
             else
             {
-                winImage.enabled = false;
-                loseImage.enabled = true;
-
-                stunned = true;
+                dashIcon.color = new Color(1, 1, 1, 1);
+                //dashTmerText.enabled = false;
+                dashTmerText.text = "";
             }
-        }
 
-        dashCollision.size = new Vector3(2.51f, 0.97f, 1.3f) * scaleDashCollision;
-        stunTimer -= Time.deltaTime * GameManager.gameSpeed;
-        if (stunTimer > 0 && !blocking) moveSpeed = speed;
-
-        Dash();
-        Block();
-        Movement();
-
-        if (nearWall)
-        {
-            nearWall = false;
-        }
-
-        //returns true if your score is greater than 0
-        holdingOrb = currentHeld > 0;
-
-        if (dashCooldownTimer > 0)
-        {
-            dashIcon.color = new Color(1, 1, 1, .3f);
-            //dashTmerText.enabled = true;
-            dashTmerText.text = ((int)dashCooldownTimer + 1).ToString();
-        }
-        else
-        {
-            dashIcon.color = new Color(1, 1, 1, 1);
-            //dashTmerText.enabled = false;
-            dashTmerText.text = "";
-        }
-
-        if (heldOrb != null)
-        {
-            heldOrb.transform.position = new Vector3(head.position.x, head.position.y + 2, head.position.z);
-            targetPointer.transform.LookAt(new Vector3(0, targetPointer.transform.position.y, 0));
-        }
-        else
-        {
-            if (GameObject.FindWithTag("pointOrb") != null)
+            if (heldOrb != null)
             {
-                Transform orb = GameObject.FindWithTag("pointOrb").transform;
-                Vector3 lookAtTarget = new Vector3(orb.position.x, 0 + targetPointer.transform.position.y, orb.position.z);
-                targetPointer.transform.LookAt(lookAtTarget);
+                heldOrb.transform.position = new Vector3(head.position.x, head.position.y + 2, head.position.z);
+                targetPointer.transform.LookAt(new Vector3(0, targetPointer.transform.position.y, 0));
             }
-        }
+            else
+            {
+                if (GameObject.FindWithTag("pointOrb") != null)
+                {
+                    Transform orb = GameObject.FindWithTag("pointOrb").transform;
+                    Vector3 lookAtTarget = new Vector3(orb.position.x, 0 + targetPointer.transform.position.y, orb.position.z);
+                    targetPointer.transform.LookAt(lookAtTarget);
+                }
+            }
 
-        mesh.GetComponent<Animator>().SetFloat("gameSpeed", GameManager.gameSpeed);
-        Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
+            mesh.GetComponent<Animator>().SetFloat("gameSpeed", GameManager.gameSpeed);
+            Camera.allCameras[id].GetComponent<MouseAimCamera>().scoreText.text = score.ToString();
+        }
     }
 }

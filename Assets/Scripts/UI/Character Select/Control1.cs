@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Control : MonoBehaviour {
+public class Control1 : MonoBehaviour {
 
     public struct Controller {
         public int joyNum;
@@ -21,6 +21,7 @@ public class Control : MonoBehaviour {
     public List<GameObject> defaultPlayer = new List<GameObject>();
     public GameObject defaultLight;
     public int playerCount = 0;
+    public List<Transform> camPositions = new List<Transform>();
 
     public List<GameObject> menuContext = new List<GameObject>();
     public GameObject highlightSprite;
@@ -36,6 +37,7 @@ public class Control : MonoBehaviour {
     //flags
     private bool   swapToCharacterSelect    = false;
     private bool   swapToMainMenu           = false;
+    private bool   swapToOptions            = false;
     private bool   isPlaystation            = false;
     private bool   nextPress                = true;
     private bool   canReady                 = false;
@@ -43,7 +45,10 @@ public class Control : MonoBehaviour {
     private bool[] p_cycleReady             = null;
     public string  contextOrientation       = "Vertical";
 
+    private Vector3 menuStartPosition;
+
     void Start() {
+        menuStartPosition = mainMenuScreen.transform.position;
         selectedIndex = 0;
         for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 4; i++) {
@@ -75,7 +80,8 @@ public class Control : MonoBehaviour {
         swapToMainMenu = false;
     }
     void Options() {
-        swapToCharacterSelect = true;
+        swapToCharacterSelect = false;
+        swapToOptions = true;
         swapToMainMenu = false;
     }
     void Quit() {
@@ -112,6 +118,7 @@ public class Control : MonoBehaviour {
                 }
                 if (Input.GetButtonDown("Cancel" + 0)) {
                     swapToCharacterSelect = false;
+                    swapToOptions = false;
                     swapToMainMenu = true;
                 }
                 for (int i = 0; i < controllerCount; i++)
@@ -161,8 +168,10 @@ public class Control : MonoBehaviour {
                     //GameManager.players[i].GetComponent<Player>().controls.dash
                 }
                 GameManager.players.Clear();
-                for (int j = 0; j < playerCount; j++)
+                for (int j = 0; j < playerCount; j++) {
+                    defaultPlayer[j].GetComponent<Player>().screenMode = false;
                     GameManager.players.Add(defaultPlayer[j]);
+                }
 
                 SceneManager.LoadScene(1);
             }
@@ -208,14 +217,22 @@ public class Control : MonoBehaviour {
         }        
 
         if (swapToCharacterSelect) {
-            characterSelectScreen.transform.position = Vector3.Lerp(characterSelectScreen.transform.position, new Vector3(0, 0, 100), Time.deltaTime * 10);
-            mainMenuScreen.transform.position = Vector3.Lerp(mainMenuScreen.transform.position, new Vector3(800, 0, 100), Time.deltaTime * 10);
+            //characterSelectScreen.transform.position = Vector3.Lerp(characterSelectScreen.transform.position, new Vector3(0, 0, 100), Time.deltaTime * 10);
+            mainMenuScreen.transform.position = Vector3.Lerp(mainMenuScreen.transform.position, mainMenuScreen.transform.position + Vector3.up * 80, Time.deltaTime * 10);
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPositions[2].position, Time.deltaTime * 10);
         }
         if (swapToMainMenu) {
-            characterSelectScreen.transform.position = Vector3.Lerp(characterSelectScreen.transform.position, new Vector3(800, 0, 100), Time.deltaTime * 10);
-            mainMenuScreen.transform.position = Vector3.Lerp(mainMenuScreen.transform.position, new Vector3(0, 0, 100), Time.deltaTime * 10);
+            //characterSelectScreen.transform.position = Vector3.Lerp(characterSelectScreen.transform.position, new Vector3(800, 0, 100), Time.deltaTime * 10);
+            mainMenuScreen.transform.position = Vector3.Lerp(mainMenuScreen.transform.position, menuStartPosition, Time.deltaTime * 10);
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPositions[0].position, Time.deltaTime * 10);
         }
-        highlightSprite.transform.position = menuContext[selectedIndex].transform.position; 
+        if (swapToOptions) {
+            mainMenuScreen.transform.position = Vector3.Lerp(mainMenuScreen.transform.position, mainMenuScreen.transform.position + Vector3.up * 80, Time.deltaTime * 10);
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, camPositions[1].position, Time.deltaTime * 10);
+        }
+
+        highlightSprite.transform.position = menuContext[selectedIndex].transform.position;
+        GameObject.FindObjectOfType<CharacterDB>().controllerCount = controllerCount;
     }
 
 
