@@ -70,6 +70,8 @@ public class Player : MonoBehaviour
     public Text dashTmerText;
     public Image winImage;
     public Image loseImage;
+    public GameObject dashFeedback;
+    public GameObject scoreFeedback;
 
     public int score;
     public int currentHeld;
@@ -114,6 +116,7 @@ public class Player : MonoBehaviour
             {
                 if (heldOrb != null)
                 {
+                    scoreFeedback.SetActive(true);
                     Destroy(heldOrb);
                     heldOrb = null;
                     score++;
@@ -291,8 +294,14 @@ public class Player : MonoBehaviour
             else { AnimationManager.OnDashing(gameObject); }
         }
 
-        
-        
+        if (dashCooldownTimer <= 0)
+        {
+            dashFeedback.SetActive(true);
+        }
+        else
+        {
+            dashFeedback.SetActive(false);
+        }
     }
     public void Movement()
     {

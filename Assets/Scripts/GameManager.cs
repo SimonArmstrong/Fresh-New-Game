@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
     public GameObject playerHUD;
     public Text timerText;
     public Image timerImage;
+    public List<Transform> spawnLocations;
     public float gameOverScreenTime = 5;
     public static float timeLeft = 60;
     private int tempHighScore = 0;
@@ -29,16 +30,16 @@ public class GameManager : MonoBehaviour {
 
     void Start() {
         PLAYER_COUNT = 0;
-                
+        
         for (int i = 0; i < players.Count; i++) {
             players[i].GetComponent<Player>().id = i;
             if (players[i] != null) {
                 if (i < playerIDS.Count) {
                     players[i].GetComponent<Player>().inputID = playerIDS[i];
                 }
-                players[i].GetComponent<Player>().HUD = Instantiate(playerHUD, new Vector3(0, 0, 5 * i), Quaternion.identity) as GameObject;
+                players[i].GetComponent<Player>().HUD = Instantiate(playerHUD, new Vector3(spawnLocations[i].position.x, 0, spawnLocations[i].position.z), Quaternion.identity) as GameObject;
                
-                players[i] = Instantiate(players[i], new Vector3(0, 0, 5 * i), Quaternion.identity) as GameObject;
+                players[i] = Instantiate(players[i], new Vector3(spawnLocations[i].position.x, 0, spawnLocations[i].position.z), Quaternion.identity) as GameObject;
             }
         }
         //Instantiate(defaultLight, Vector3.zero, Quaternion.LookRotation(new Vector3(45, -50, 45)));
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour {
     {
         for (int i = 0; i < players.Count; i++) {
             players[i].GetComponent<Player>().score = 0;
-            Destroy(players[i].GetComponent<Player>().cam);
+            DestroyImmediate(players[i].GetComponent<Player>().cam, true);
         }
         gameEnd = false;
         gameSpeed = 1;
