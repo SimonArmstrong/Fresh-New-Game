@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public static int PLAYER_COUNT;
-    public GameMode GAME_MODE = GameMode.FirstTo;
+    public static GameMode GAME_MODE = GameMode.FirstTo;
     public static float gameSpeed = 1;
     public static int currentSpawned;
     public static List<int> playerIDS = new List<int>();
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
     public GameObject defaultLight;
     public GameObject playerHUD;
     public Text timerText;
+    public Image timerImage;
     public float gameOverScreenTime = 5;
     public static float timeLeft = 60;
     private int tempHighScore = 0;
@@ -58,6 +59,8 @@ public class GameManager : MonoBehaviour {
         }
         else if (GAME_MODE == GameMode.Oddball) { }
         else if (GAME_MODE == GameMode.FirstTo) {
+            timerImage.enabled = false;
+            timerText.enabled = false;
             for (int i = 0; i < players.Count; i++) {
                 if (players[i].GetComponent<Player>().score == scoreToWin) {
                     gameSpeed = Mathf.Lerp(gameSpeed, .05f, Time.deltaTime * 2);
