@@ -27,7 +27,7 @@ public class Control1 : MonoBehaviour {
     public GameObject highlightSprite;
     public int selectedIndex;
 
-    public int controllerCount;
+    public static int controllerCount;
 
     public List<Controller> controllers = new List<Controller>();
 
@@ -43,6 +43,7 @@ public class Control1 : MonoBehaviour {
     private bool   canReady                 = false;
     private bool   cycleReady               = false;
     private bool[] p_cycleReady             = null;
+    private bool[] p_loggedIn               = null;
     public string  contextOrientation       = "Vertical";
 
     private Vector3 menuStartPosition;
@@ -69,6 +70,8 @@ public class Control1 : MonoBehaviour {
         mainMenu.element("Options").execute = Options;
         mainMenu.element("Quit").execute = Quit;
 
+        p_loggedIn = new bool[4];
+
         if(keyboard)
             p_cycleReady = new bool[1];
         else
@@ -90,15 +93,6 @@ public class Control1 : MonoBehaviour {
 
     void Update () {
         if (controllerCount == 0) controllerCount = 1;
-        for (int i = 0; i < 4; i++) {
-            if (!playerSelectImages[i].on) {
-                playerSelectImages[i].image.color = filteredColor;
-            }
-            else {
-                StartCoroutine(Flash(playerSelectImages[i]));
-                playerSelectImages[i].image.color = Color.white;
-            }
-        }
 
         if (!isPlaystation) //-DIRECT X-
         {
@@ -129,21 +123,21 @@ public class Control1 : MonoBehaviour {
                     }
                     if (swapToCharacterSelect)
                     {
-                        if (Input.GetButtonDown("Cancel" + i) && playerSelectImages[i].on == true)
+                        if (Input.GetButtonDown("Cancel" + i) && p_loggedIn[i] == true)
                         {
-                            playerSelectImages[i].on = false;
+                            p_loggedIn[i] = false;
                             playerCount--;
                         }
 
-                        if (Input.GetButtonDown("Submit" + i) && playerSelectImages[i].on == false)
+                        if (Input.GetButtonDown("Submit" + i) && p_loggedIn[i] == false)
                         {
-                            playerSelectImages[i].on = true;
+                            p_loggedIn[i] = true;
                             playerCount++;
                         }
 
                         if ((int)Input.GetAxis(contextOrientation + i) != 0 && p_cycleReady[i])
                         {
-                            playerSelectImages[i].currentSelectedCharacter -= (int)Input.GetAxis(contextOrientation + 0);
+                            //playerSelectImages[i].currentSelectedCharacter -= (int)Input.GetAxis(contextOrientation + 0);
                             p_cycleReady[i] = false;
                         }
                         if ((int)Input.GetAxis(contextOrientation + i) == 0)
@@ -185,7 +179,7 @@ public class Control1 : MonoBehaviour {
             for (int i = controllerCount; i < 4; i++) {
                 if (Input.GetKeyDown((KeyCode)(350 + (i * 20) + 1))) {
                     controllerCount++;
-                    playerSelectImages[i].on = true;
+                    p_loggedIn[i] = true;
                 }
             }
             if (canReady && Input.GetKeyDown((KeyCode)359)) { 
@@ -232,7 +226,6 @@ public class Control1 : MonoBehaviour {
         }
 
         highlightSprite.transform.position = menuContext[selectedIndex].transform.position;
-        GameObject.FindObjectOfType<CharacterDB>().controllerCount = controllerCount;
     }
 
 

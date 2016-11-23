@@ -26,7 +26,7 @@ public class Control : MonoBehaviour {
     public GameObject highlightSprite;
     public int selectedIndex;
 
-    public int controllerCount;
+    public static int controllerCount;
 
     public List<Controller> controllers = new List<Controller>();
 
