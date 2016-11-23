@@ -5,6 +5,7 @@ public class ORBSpawn : MonoBehaviour {
     public Vector3 pointR;
     public GameObject Orb;
     public GameObject orbInstance;
+    public float spawnDelay = 3f;
 
     public float innerOffset;
     public float outerOffset; 
@@ -35,7 +36,10 @@ public class ORBSpawn : MonoBehaviour {
             spawnCheck.transform.position = spawnPosition;
             if (!spawnCheck.GetComponent<CollisionCheck>().colliding) {
                 Destroy(spawnCheck);
-                orbInstance = Instantiate(Orb, spawnPosition, Quaternion.identity) as GameObject;
+                spawnDelay -= Time.deltaTime;
+                if (spawnDelay <= 0) {
+                    orbInstance = Instantiate(Orb, spawnPosition, Quaternion.identity) as GameObject;
+                }
             }
             else { spawnPosition = GetRandomPointInRadius(40); }
         }        
