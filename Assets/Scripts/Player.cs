@@ -208,8 +208,8 @@ public class Player : MonoBehaviour
             }
             else if (GameManager.players.Count == 2)
             {
-                if (id == 0) cam.rect = new Rect(0, -0.5f, 1, 1);
-                else if (id == 1) cam.rect = new Rect(0, 0.5f, 1, 1);
+                if (id == 1) cam.rect = new Rect(0, 0.5f, 1, 1);
+                else if (id == 0) cam.rect = new Rect(0, -0.5f, 1, 1);
             }
             else if (GameManager.players.Count == 3)
             {
