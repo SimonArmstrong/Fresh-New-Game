@@ -20,6 +20,7 @@ public class Control1 : MonoBehaviour {
     public GameObject readyScreen;
     public List<GameObject> defaultPlayer = new List<GameObject>();
     public GameObject defaultLight;
+    public Animator tutorialAnimator;
     public int playerCount = 0;
     public List<Transform> camPositions = new List<Transform>();
     public List<Transform> spawnPositions = new List<Transform>();
@@ -45,6 +46,7 @@ public class Control1 : MonoBehaviour {
     private bool   cycleReady               = false;
     private bool[] p_cycleReady             = null;
     private bool[] p_loggedIn               = null;
+    private int    tutorialIndex            = 0;
     private List<string> alreadyAddedControllers = new List<string>();
     public string  contextOrientation       = "Vertical";
 
@@ -53,15 +55,19 @@ public class Control1 : MonoBehaviour {
     void Start() {
         menuStartPosition = mainMenuScreen.transform.position;
         selectedIndex = 0;
+        /*
         for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 4; i++) {
                 if (i < Input.GetJoystickNames().Length && j < Input.GetJoystickNames().Length) {
                     if (!ReferenceEquals(Input.GetJoystickNames()[i], Input.GetJoystickNames()[j])) {
+                        //Debug.Log(i.ToString() + j.ToString());
                         //controllerCount++;
                     }
                 }
             }
         }
+        //Debug.Log(controllerCount);
+        */
         controllerCount = Mathf.Clamp(controllerCount, 0, 4);
 
         mainMenu.elements.Add(new Menu.Item("Play", menuContext[0].transform));
@@ -112,9 +118,20 @@ public class Control1 : MonoBehaviour {
                         cycleReady = true;
                     }
                 }
+                if (swapToOptions)
+                {
+                    if (tutorialIndex > 7) tutorialIndex = 0;
+                    if (Input.GetButtonDown("Submit" + 0))
+                    {
+                        tutorialAnimator.SetBool(tutorialAnimator.parameters[tutorialIndex].nameHash, false);
+                        tutorialIndex++;
+                        tutorialAnimator.SetBool(tutorialAnimator.parameters[tutorialIndex].nameHash, true);
+                    }
+                }
                 for (int i = 0; i < 4; i++) {
                     if (Input.GetButtonDown("Submit" + i)) {
                         alreadyAddedControllers.Add("");
+                        //Debug.Log(alreadyAddedControllers[i]);
                         if (alreadyAddedControllers[i] != "Submit" + i) {
                             controllerCount++;
                             Debug.Log(controllerCount);
@@ -124,6 +141,7 @@ public class Control1 : MonoBehaviour {
                         }
                     }
                 }
+                
                 if (Input.GetButtonDown("Cancel" + 0)) {
                     swapToCharacterSelect = false;
                     swapToOptions = false;
@@ -168,9 +186,9 @@ public class Control1 : MonoBehaviour {
                 GameManager.playerIDS.Clear();
                 for (int j = 0; j < 4; j++)
                 {
-                    if (playerSelectImages[j].on)
+                    if (p_loggedIn[j])
                     {
-                        GameManager.playerIDS.Add(playerSelectImages[j].num);
+                        GameManager.playerIDS.Add(j);
                     }
                     //defaultPlayer.GetComponent<Player>().id = playerNum[j];
                     //GameManager.players[i].GetComponent<Player>().controls = new Player.Controller();
