@@ -12,13 +12,12 @@ public class CharacterDB : MonoBehaviour {
         {
             if (!characters[i].GetComponent<Player>().screenMode) characters[i].GetComponent<Player>().screenMode = true;
         }
-        for (int i = 0; i < Control1.controllerCount; i++)
-        {
-            Instantiate(characters[i], spawnPositions[i].position, Quaternion.identity);
-        }
     }
 	
 	// Update is called once per frame
-	void Update () {
-	}
+	public static void PlayerAdded () {
+        for (int i = 0; i < Control1.controllerCount; i++) {
+            //Instantiate(characters[i], spawnPositions[i].position, Quaternion.identity);
+        }
+    }
 }

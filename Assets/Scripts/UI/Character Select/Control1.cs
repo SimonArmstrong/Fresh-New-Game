@@ -22,6 +22,8 @@ public class Control1 : MonoBehaviour {
     public GameObject defaultLight;
     public int playerCount = 0;
     public List<Transform> camPositions = new List<Transform>();
+    public List<Transform> spawnPositions = new List<Transform>();
+    public List<Transform> characters = new List<Transform>();
 
     public List<GameObject> menuContext = new List<GameObject>();
     public GameObject highlightSprite;
@@ -30,7 +32,6 @@ public class Control1 : MonoBehaviour {
     public static int controllerCount;
 
     public List<Controller> controllers = new List<Controller>();
-
     // 350 is joy1, 20 nums between each joy // -DUALSHOCK-
     // 350 is joy1, 20 nums between each joy // -DIRECT X -
 
@@ -44,6 +45,7 @@ public class Control1 : MonoBehaviour {
     private bool   cycleReady               = false;
     private bool[] p_cycleReady             = null;
     private bool[] p_loggedIn               = null;
+    private List<string> alreadyAddedControllers = new List<string>();
     public string  contextOrientation       = "Vertical";
 
     private Vector3 menuStartPosition;
@@ -55,7 +57,7 @@ public class Control1 : MonoBehaviour {
             for (int i = 0; i < 4; i++) {
                 if (i < Input.GetJoystickNames().Length && j < Input.GetJoystickNames().Length) {
                     if (!ReferenceEquals(Input.GetJoystickNames()[i], Input.GetJoystickNames()[j])) {
-                        controllerCount++;
+                        //controllerCount++;
                     }
                 }
             }
@@ -92,7 +94,7 @@ public class Control1 : MonoBehaviour {
     }
 
     void Update () {
-        if (controllerCount == 0) controllerCount = 1;
+        //if (controllerCount == 0) controllerCount = 1;
 
         if (!isPlaystation) //-DIRECT X-
         {
@@ -108,6 +110,18 @@ public class Control1 : MonoBehaviour {
                     if ((int)Input.GetAxis(contextOrientation + 0) == 0)
                     {
                         cycleReady = true;
+                    }
+                }
+                for (int i = 0; i < 4; i++) {
+                    if (Input.GetButtonDown("Submit" + i)) {
+                        alreadyAddedControllers.Add("");
+                        if (alreadyAddedControllers[i] != "Submit" + i) {
+                            controllerCount++;
+                            Debug.Log(controllerCount);
+                            if (!characters[i].GetComponent<Player>().screenMode) characters[i].GetComponent<Player>().screenMode = true;
+                            Instantiate(characters[i], spawnPositions[i].position, Quaternion.identity);
+                            alreadyAddedControllers[i] = "Submit" + i;
+                        }
                     }
                 }
                 if (Input.GetButtonDown("Cancel" + 0)) {
@@ -134,7 +148,7 @@ public class Control1 : MonoBehaviour {
                             p_loggedIn[i] = true;
                             playerCount++;
                         }
-
+                        /*
                         if ((int)Input.GetAxis(contextOrientation + i) != 0 && p_cycleReady[i])
                         {
                             //playerSelectImages[i].currentSelectedCharacter -= (int)Input.GetAxis(contextOrientation + 0);
@@ -144,6 +158,7 @@ public class Control1 : MonoBehaviour {
                         {
                             p_cycleReady[i] = true;
                         }
+                        */
                     }
 
                 }
