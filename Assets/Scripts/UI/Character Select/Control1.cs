@@ -99,6 +99,8 @@ public class Control1 : MonoBehaviour {
     }
 
     void Update () {
+        //List<GameObject> = 
+
         //if (controllerCount == 0) controllerCount = 1;
         controllerCount = Mathf.Clamp(controllerCount, 0, 4);
         if (!isPlaystation) //-DIRECT X-
@@ -133,7 +135,7 @@ public class Control1 : MonoBehaviour {
                         //Debug.Log(alreadyAddedControllers[i]);
                         if (alreadyAddedControllers[i] != "Submit" + i) {
                             controllerCount++;
-                            Debug.Log(controllerCount);
+                            p_cycleReady = new bool[controllerCount];
                             if (!characters[i].GetComponent<Player>().screenMode) characters[i].GetComponent<Player>().screenMode = true;
                             Instantiate(characters[i], spawnPositions[i].position, Quaternion.identity);
                             alreadyAddedControllers[i] = "Submit" + i;
@@ -165,17 +167,17 @@ public class Control1 : MonoBehaviour {
                             p_loggedIn[i] = true;
                             playerCount++;
                         }
-                        /*
+                        
                         if ((int)Input.GetAxis(contextOrientation + i) != 0 && p_cycleReady[i])
                         {
-                            //playerSelectImages[i].currentSelectedCharacter -= (int)Input.GetAxis(contextOrientation + 0);
+                            
                             p_cycleReady[i] = false;
                         }
                         if ((int)Input.GetAxis(contextOrientation + i) == 0)
                         {
                             p_cycleReady[i] = true;
                         }
-                        */
+                        
                     }
 
                 }
