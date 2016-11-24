@@ -21,7 +21,12 @@ public class GameManager : MonoBehaviour {
     public GameObject playerHUD;
     public Text timerText;
     public Image timerImage;
+    public Text spawnCountdown;
+    public Text a_text;
+    public Text notificationText;
+    public Image notificationBar;
     public List<Transform> spawnLocations;
+    public float textEnableDelay = 7f;
     public float gameOverScreenTime = 5;
     public static float timeLeft = 60;
     private int tempHighScore = 0;
@@ -51,6 +56,13 @@ public class GameManager : MonoBehaviour {
         {
             timeLeft -= Time.deltaTime * GameManager.gameSpeed;
             timerText.text = ((int)timeLeft + 1).ToString();
+            textEnableDelay -= Time.deltaTime;
+            if (textEnableDelay <= 0)
+            {
+                spawnCountdown.enabled = true;
+                spawnCountdown.text = ((int)FindObjectOfType<ORBSpawn>().spawnDelay + 1).ToString();
+            }
+            else spawnCountdown.enabled = false;
             if (timeLeft < 0)
             {
                 timerText.text = 0.ToString();
@@ -62,6 +74,22 @@ public class GameManager : MonoBehaviour {
         else if (GAME_MODE == GameMode.FirstTo) {
             timerImage.enabled = false;
             timerText.enabled = false;
+            a_text.enabled = false;
+            textEnableDelay -= Time.deltaTime;
+            if (textEnableDelay <= 0)
+            {
+                notificationBar.enabled = false;
+                notificationText.enabled = false;
+                a_text.enabled = true;
+                spawnCountdown.text = ((int)FindObjectOfType<ORBSpawn>().spawnDelay + 1).ToString();
+                spawnCountdown.enabled = true;
+            }
+            else spawnCountdown.enabled = false;
+            if (FindObjectOfType<ORBSpawn>().spawnDelay <= 0)
+            {
+                spawnCountdown.enabled = false;
+                a_text.enabled = false;
+            }
             for (int i = 0; i < players.Count; i++) {
                 if (players[i].GetComponent<Player>().score == scoreToWin) {
                     gameSpeed = Mathf.Lerp(gameSpeed, .05f, Time.deltaTime * 2);
