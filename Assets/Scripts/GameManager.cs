@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour {
             timerImage.enabled = false;
             timerText.enabled = false;
             a_text.enabled = false;
+            FindObjectOfType<Player>().targetPointer.SetActive(false);
             textEnableDelay -= Time.deltaTime;
             if (textEnableDelay <= 0)
             {
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour {
             {
                 spawnCountdown.enabled = false;
                 a_text.enabled = false;
+                FindObjectOfType<Player>().targetPointer.SetActive(true);
             }
             for (int i = 0; i < players.Count; i++) {
                 if (players[i].GetComponent<Player>().score == scoreToWin) {
