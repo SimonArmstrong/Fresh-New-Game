@@ -208,21 +208,21 @@ public class Player : MonoBehaviour
             }
             else if (GameManager.players.Count == 2)
             {
-                if (id == 1) cam.rect = new Rect(0, 0.5f, 1, 1);
-                else if (id == 0) cam.rect = new Rect(0, -0.5f, 1, 1);
+                if (id == 0) cam.rect = new Rect(0, 0.5f, 1, 1);
+                else if (id == 1) cam.rect = new Rect(0, -0.5f, 1, 1);
             }
             else if (GameManager.players.Count == 3)
             {
-                if (id == 0) cam.rect = new Rect(0, 0.5f, 1, 1);
-                else if (id == 1) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
-                else if (id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
+                if (id == 0) cam.rect      = new Rect( 0,     0.5f, 1, 1);
+                else if (id == 1) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
+                else if (id == 2) cam.rect = new Rect( 0.5f, -0.5f, 1, 1);
             }
             else if (GameManager.players.Count == 4)
             {
-                if (id == 0) cam.rect = new Rect(-.5f, 0.5f, 1, 1);
-                else if (id == 1) cam.rect = new Rect(.5f, .5f, 1, 1);
+                if (id == 0) cam.rect      = new Rect(-.5f,   0.5f, 1, 1);
+                else if (id == 1) cam.rect = new Rect( .5f,    .5f, 1, 1);
                 else if (id == 2) cam.rect = new Rect(-0.5f, -0.5f, 1, 1);
-                else if (id == 3) cam.rect = new Rect(0.5f, -0.5f, 1, 1);
+                else if (id == 3) cam.rect = new Rect( 0.5f, -0.5f, 1, 1);
             }
 
             Instantiate(cam, new Vector3(transform.position.x, transform.position.y + 5, transform.position.z - 8), Quaternion.identity);
