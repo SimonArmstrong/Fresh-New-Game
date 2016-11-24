@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
             {
                 if (heldOrb != null)
                 {
-                    scoreFeedback.SetActive(true);
+                    scoreFeedback.GetComponent<ParticleSystem>().Play();
                     Destroy(heldOrb);
                     heldOrb = null;
                     score++;
