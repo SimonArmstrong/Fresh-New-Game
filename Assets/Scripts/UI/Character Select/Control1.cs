@@ -68,7 +68,6 @@ public class Control1 : MonoBehaviour {
         }
         //Debug.Log(controllerCount);
         */
-        controllerCount = Mathf.Clamp(controllerCount, 0, 4);
 
         mainMenu.elements.Add(new Menu.Item("Play", menuContext[0].transform));
         mainMenu.elements.Add(new Menu.Item("Options", menuContext[1].transform));
@@ -101,7 +100,7 @@ public class Control1 : MonoBehaviour {
 
     void Update () {
         //if (controllerCount == 0) controllerCount = 1;
-
+        controllerCount = Mathf.Clamp(controllerCount, 0, 4);
         if (!isPlaystation) //-DIRECT X-
         {
             //if (!keyboard)
