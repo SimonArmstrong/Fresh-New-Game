@@ -1,15 +1,47 @@
 fileFormatVersion: 2
-guid: 3dd1cd758b8293a4ea36ce1d67a0d68a
-timeCreated: 1478146802
+guid: a60c8b856b8372e42ada48a812f8bd32
+timeCreated: 1480035192
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: M_Chest_Arm
+    100004: M_Gauntlet_L_Arm1
+    100006: M_Gauntlet_R_Arm
+    100008: M_Greave_R_Arm
+    100010: M_Greave_R_Arm1
+    100012: M_Pauldron_L_Arm
+    100014: M_Pauldron_R_Arm
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: BaseMesh
+    400002: M_Chest_Arm
+    400004: M_Gauntlet_L_Arm1
+    400006: M_Gauntlet_R_Arm
+    400008: M_Greave_R_Arm
+    400010: M_Greave_R_Arm1
+    400012: M_Pauldron_L_Arm
+    400014: M_Pauldron_R_Arm
+    2300000: M_Chest_Arm
+    2300002: M_Gauntlet_L_Arm1
+    2300004: M_Gauntlet_R_Arm
+    2300006: M_Greave_R_Arm
+    2300008: M_Greave_R_Arm1
+    2300010: M_Pauldron_L_Arm
+    2300012: M_Pauldron_R_Arm
+    3300000: M_Chest_Arm
+    3300002: M_Gauntlet_L_Arm1
+    3300004: M_Gauntlet_R_Arm
+    3300006: M_Greave_R_Arm
+    3300008: M_Greave_R_Arm1
+    3300010: M_Pauldron_L_Arm
+    3300012: M_Pauldron_R_Arm
+    4300000: M_Pauldron_R_Arm
+    4300002: M_Pauldron_L_Arm
+    4300004: M_Gauntlet_L_Arm1
+    4300006: M_Chest_Arm
+    4300008: M_Gauntlet_R_Arm
+    4300010: M_Greave_R_Arm
+    4300012: M_Greave_R_Arm1
   materials:
     importMaterials: 1
     materialName: 0
@@ -51,7 +83,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0

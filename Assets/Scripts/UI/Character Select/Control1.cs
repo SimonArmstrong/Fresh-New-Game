@@ -29,6 +29,7 @@ public class Control1 : MonoBehaviour {
     public List<GameObject> menuContext = new List<GameObject>();
     public GameObject highlightSprite;
     public int selectedIndex;
+    public int selectedCharIndex;
 
     public static int controllerCount;
 
@@ -48,6 +49,7 @@ public class Control1 : MonoBehaviour {
     private bool[] p_loggedIn               = null;
     private int    tutorialIndex            = 0;
     private List<string> alreadyAddedControllers = new List<string>();
+    private List<GameObject> characterInstances = new List<GameObject>();
     public string  contextOrientation       = "Vertical";
 
     private Vector3 menuStartPosition;
@@ -99,7 +101,6 @@ public class Control1 : MonoBehaviour {
     }
 
     void Update () {
-        //List<GameObject> = 
 
         //if (controllerCount == 0) controllerCount = 1;
         controllerCount = Mathf.Clamp(controllerCount, 0, 4);
@@ -137,7 +138,7 @@ public class Control1 : MonoBehaviour {
                             controllerCount++;
                             p_cycleReady = new bool[controllerCount];
                             if (!characters[i].GetComponent<Player>().screenMode) characters[i].GetComponent<Player>().screenMode = true;
-                            Instantiate(characters[i], spawnPositions[i].position, Quaternion.identity);
+                            characterInstances.Add(Instantiate(characters[i].gameObject, spawnPositions[i].position, Quaternion.identity) as GameObject);
                             alreadyAddedControllers[i] = "Submit" + i;
                         }
                     }
@@ -170,7 +171,12 @@ public class Control1 : MonoBehaviour {
                         
                         if ((int)Input.GetAxis(contextOrientation + i) != 0 && p_cycleReady[i])
                         {
-                            
+                            Destroy(characterInstances[i].gameObject);
+                            if (selectedCharIndex > characterInstances.Count - 1) selectedCharIndex = 0;
+                            if (selectedCharIndex < 0) selectedCharIndex = characterInstances.Count - 1;
+                            characterInstances[i] = Instantiate(defaultPlayer[selectedCharIndex], spawnPositions[i].position, Quaternion.identity) as GameObject;
+                            if (!characterInstances[i].GetComponent<Player>().screenMode) characterInstances[i].GetComponent<Player>().screenMode = true;
+                            selectedCharIndex += (int)Input.GetAxis(contextOrientation + i);
                             p_cycleReady[i] = false;
                         }
                         if ((int)Input.GetAxis(contextOrientation + i) == 0)
